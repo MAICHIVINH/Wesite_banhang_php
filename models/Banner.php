@@ -13,7 +13,7 @@ class Banner extends Model
         'image' => 'VARCHAR(255)',
         'link' => 'VARCHAR(255)',
         'position' => "VARCHAR(50) DEFAULT 'slider_main'",
-        'status' => 'BIT DEFAULT 1',
+        'status' => 'TINYINT(1) DEFAULT 1',
         'isDeleted' => 'TINYINT(1) DEFAULT 0',
     ];
 
