@@ -243,7 +243,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
                                 <?php }; ?>
                             </div>
                         </div>
-                        <?php if ($order['status_name'] === 'Chờ xử lý') { ?>
+                        <?php if ($order['status_name'] === 'Chờ xử lý' || (int)$order['status_id'] === 7) { ?>
                             <button type="button" class="cancel-btn" data-bs-toggle="modal" data-bs-target="#cancelModal" data-order-id="<?= htmlspecialchars($order['order_id']) ?>">
                                 Hủy đơn hàng
                             </button>
