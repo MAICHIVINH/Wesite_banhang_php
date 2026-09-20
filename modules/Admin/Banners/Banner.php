@@ -146,7 +146,10 @@ if ($filterPosition !== '') {
                                 <form method="POST" class="d-inline">
                                     <input type="hidden" name="action" value="toggle_status">
                                     <input type="hidden" name="id" value="<?= $b['id'] ?>">
-                                    <?php if (isset($b['status']) && (int)$b['status'] === 1): ?>
+                                    <?php 
+                                    $bSt = isset($b['status']) ? (is_numeric($b['status']) ? (int)$b['status'] : ord($b['status'])) : 1;
+                                    if ($bSt === 1): 
+                                    ?>
                                         <button type="submit" class="btn btn-sm btn-success border-0 px-3 py-1 rounded-pill" title="Click để ẩn banner">
                                             <i class="bi bi-check-circle me-1"></i> Hiển thị
                                         </button>

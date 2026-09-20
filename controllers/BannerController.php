@@ -55,12 +55,20 @@ class BannerController
         return $activeBanners;
     }
 
+    private function parseStatus($val)
+    {
+        if ($val === null) return 1;
+        if (is_numeric($val)) return (int)$val;
+        if (is_string($val) && strlen($val) === 1) return ord($val);
+        return (int)$val;
+    }
+
     public function getAllActive()
     {
         $all = $this->getAll();
         $list = [];
         foreach ($all as $b) {
-            $status = isset($b['status']) ? (int)$b['status'] : 1;
+            $status = isset($b['status']) ? $this->parseStatus($b['status']) : 1;
             if ($status === 1) {
                 $list[] = $b;
             }
@@ -164,7 +172,8 @@ class BannerController
         $existing = $this->bannerModel->find($id);
         if (!$existing) return ['success' => false, 'message' => 'Không tìm thấy banner.'];
 
-        $newStatus = (isset($existing['status']) && (int)$existing['status'] === 1) ? 0 : 1;
+        $currentStatus = isset($existing['status']) ? $this->parseStatus($existing['status']) : 1;
+        $newStatus = ($currentStatus === 1) ? 0 : 1;
         $this->bannerModel->update($id, ['status' => $newStatus]);
         RedisCache::delete('banners:all');
 

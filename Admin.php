@@ -6,6 +6,9 @@ ini_set('display_errors', 1);
 session_name('admin_session');
 session_start();
 date_default_timezone_set('Asia/Ho_Chi_Minh');
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    require_once __DIR__ . '/vendor/autoload.php';
+}
 require_once './controllers/ProductController.php';
 require_once './controllers/SupplierController.php';
 require_once './controllers/CategoryController.php';
