@@ -1,0 +1,147 @@
+.product-container {
+    width: 100%;
+}
+
+.product-container h1 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    color: #333;
+    text-align: center;
+}
+
+.product-container .btn-success {
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+
+.product-container .btn-success:hover {
+    background-color: #198754;
+}
+
+.product-container .search-form {
+    display: flex;
+    align-items: center;
+    position: relative;
+    max-width: 350px;
+    width: 100%;
+}
+
+
+.product-container .search-input {
+    padding-left: 35px;
+    border-radius: 50px;
+    border: 1px solid #ced4da;
+    transition: border-color 0.3s;
+    width: 100%;
+    height: 38px;
+}
+
+.product-container .search-input:focus {
+    border-color: #198754;
+    box-shadow: 0 0 5px rgba(25, 135, 84, 0.3);
+    outline: none;
+}
+
+.product-container .search-btn {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    padding: 0;
+    z-index: 2;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    min-height: 280px;
+    padding-bottom: 50px;
+}
+
+.custom-table {
+    width: 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    border-collapse: collapse;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.custom-table .dropdown-menu {
+    z-index: 1050;
+}
+
+.custom-table th,
+.custom-table td {
+    border: 1px solid #dee2e6;
+    padding: 12px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.custom-table thead th {
+    background-color: #0a48ff;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.custom-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.custom-table tbody td {
+    color: #555;
+    font-size: 15px;
+}
+
+.custom-table img {
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+.action-buttons {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 100%;
+}
+
+.action-buttons .btn {
+    padding: 5px 12px;
+    font-size: 14px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.action-buttons .btn-primary:hover {
+    background-color: #0d6efd;
+}
+
+.action-buttons .btn-danger:hover {
+    background-color: #dc3545;
+}
+
+.pagination .page-link {
+    transition: all 0.3s ease;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    color: #fff;
+}
+
+.pagination .page-link:hover {
+    background-color: rgba(25, 135, 84, 0.1);
+}

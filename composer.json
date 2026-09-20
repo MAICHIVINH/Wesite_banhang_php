@@ -1,0 +1,18 @@
+{
+    "description": "student manager",
+    "name": "phuocbinh/bao-cao",
+    "require": {
+        "respect/validation": "^2.4",
+        "cloudinary/cloudinary_php": "^3.1",
+        "firebase/php-jwt": "^6.11",
+        "predis/predis": "^3.0",
+        "endroid/qr-code": "^5.1",
+        "payos/payos": "^1.0",
+        "guzzlehttp/guzzle": "^7.9",
+        "phpmailer/phpmailer": "^6.10",
+        "erusev/parsedown": "^1.7",
+        "phpoffice/phpspreadsheet": "^5.0",
+        "vlucas/phpdotenv": "^5.6"
+    },
+    "type": "project"
+}

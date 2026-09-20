@@ -1,0 +1,8 @@
+    .form-check-input:checked {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .btn-danger {
+        font-weight: bold;
+    }

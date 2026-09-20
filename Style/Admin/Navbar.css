@@ -1,0 +1,10 @@
+/* Đảm bảo navbar và sidebar cùng màu và liền mạch */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1050;
+  background-color: #0f70d1;
+}

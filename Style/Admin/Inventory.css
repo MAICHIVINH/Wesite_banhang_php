@@ -1,0 +1,67 @@
+.search-input-group {
+    max-width: 350px;
+    border-radius: 50px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #ccc;
+    transition: box-shadow 0.3s ease;
+}
+
+.search-input-group:focus-within {
+    box-shadow: 0 0 6px rgba(13, 110, 253, 0.5);
+}
+
+.search-input-group input {
+    border: none;
+    box-shadow: none;
+    outline: none;
+    background-color: #fff;
+    padding-left: 0.5rem;
+}
+
+.search-input-group .input-group-text {
+    background-color: #fff;
+    border: none;
+}
+
+#searchInput:focus {
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
+}
+
+.custom-table {
+    font-size: 14px;
+    line-height: 1.3;
+    margin-bottom: 0;
+    background-color: #fff;
+    border-collapse: collapse;
+}
+
+.custom-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.custom-table tbody tr:hover {
+    background-color: #e2e6ea;
+}
+
+
+/* Link tên sản phẩm */
+.custom-table a {
+    color: #0d6efd;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.custom-table a:hover {
+    text-decoration: underline;
+}
+
+/* Nút chức năng */
+.btn-group .btn {
+    padding: 4px 6px;
+    font-size: 13px;
+}
+
+.btn-group .btn i {
+    margin: 0;
+    font-size: 13px;
+}

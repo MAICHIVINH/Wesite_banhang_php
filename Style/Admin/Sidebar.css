@@ -1,0 +1,131 @@
+.sidebar {
+  width: 250px;
+  background-color: #f4f6f8;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
+  scrollbar-width: none;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar ul li {
+  padding: 10px 20px;
+}
+
+.gradient-text {
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  background: linear-gradient(90deg, #ff4e50, #ef4cf5, #1e90ff, #7b2ff7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+.gradient-text:hover {
+  opacity: 0.8;
+  transition: all 0.2s ease;
+}
+
+.sidebar a i {
+  margin-right: 8px;
+  width: 20px;
+}
+
+
+.sidebar ul li a,
+.sidebar .dropdown-toggle {
+  text-decoration: none;
+  color: #333;
+  display: block;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar ul li:hover,
+.sidebar .dropdown-toggle:hover {
+  background-color: #e2e6ea;
+}
+
+.sidebar ul li.active,
+.sidebar ul li.active-sub,
+.sidebar .dropdown-toggle.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.sidebar ul li.active a,
+.sidebar ul li.active-sub a,
+.sidebar .dropdown-toggle.active {
+  color: white;
+}
+
+.sidebar .dropdown {
+  position: relative;
+}
+
+.sidebar .dropdown-menu {
+  display: none;
+  list-style-type: none;
+  padding-left: 30px;
+  margin: 0;
+  border-left: 2px solid #007bff;
+  background-color: transparent;
+  position: static;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+
+.sidebar .dropdown-menu.show {
+  display: block;
+}
+
+.sidebar .dropdown-menu li {
+  padding: 8px 15px;
+  margin: 2px 0;
+}
+
+.sidebar .dropdown-menu li:hover {
+  background-color: #ced4da;
+}
+
+.dropdown-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.arrow {
+  margin-left: 85px;
+  display: inline-block;
+  transition: transform 0.3s ease;
+  font-size: 20px;
+  color: inherit;
+}
+
+.arrow.open {
+  transform: rotate(90deg);
+}
+
+.content {
+  margin-left: 250px;
+  padding: 80px 20px 20px 20px;
+}
+
+#dropdown-toggle::after {
+  content: none !important;
+  display: none !important;
+}

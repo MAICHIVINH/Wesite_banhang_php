@@ -1,0 +1,95 @@
+/* .chat-toggle-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #0d6efd;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1050;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+} */
+
+/* CSS thêm vào file hoặc trong <style> */
+.chat-toggle-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #e0f0ff;
+    /* Màu nền mặc định - cho Admin */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s;
+}
+
+#chat-toggle-ai {
+    background-color: #e6f9ec;
+    /* Màu nền riêng cho AI */
+}
+
+.chat-toggle-btn:hover {
+    transform: scale(1.1);
+    opacity: 0.9;
+}
+
+
+#chat-form {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 400px;
+    height: 500px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+}
+
+#chat-form.hidden {
+    display: none;
+}
+
+#ai-chat-form {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 400px;
+    height: 500px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+}
+
+#ai-chat-form.hidden {
+    display: none;
+}
+
+
+#ai-chat-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    background: #f8f9fa;
+    padding: 8px;
+}
+
+#chat-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    background: #f8f9fa;
+    padding: 8px;
+}

@@ -1,0 +1,16 @@
+    #toast-container > .toast-success {
+        background-color: #28a745 !important; /* Màu xanh thành công */
+        color: #fff !important;
+    }
+    #toast-container > .toast-error {
+        background-color: #dc3545 !important; /* Màu đỏ lỗi */
+        color: #fff !important;
+    }
+    #toast-container > .toast-info {
+        background-color: #17a2b8 !important;
+        color: #fff !important;
+    }
+    #toast-container > .toast-warning {
+        background-color: #ffc107 !important;
+        color: #212529 !important;
+    }
