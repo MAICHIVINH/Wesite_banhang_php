@@ -19,9 +19,16 @@
           </div>
         </div>
 
-        <!-- Leaflet Map Container -->
-        <div id="receiverMap" style="height: 380px; width: 100%; border-radius: 12px; border: 2px solid #4f46e5; position: relative; z-index: 10;" class="shadow-sm"></div>
-        <iframe id="mapIframe" class="w-100 border rounded-3 shadow-sm d-none" style="height: 380px;" allowfullscreen loading="lazy"></iframe>
+        <!-- Google Maps Embed Container -->
+        <div class="ratio ratio-16x9 border rounded-3 shadow-sm overflow-hidden">
+          <iframe
+            id="mapIframe"
+            src=""
+            style="border:0; width:100%; height:100%;"
+            allowfullscreen
+            loading="lazy">
+          </iframe>
+        </div>
       </div>
     </div>
   </div>
