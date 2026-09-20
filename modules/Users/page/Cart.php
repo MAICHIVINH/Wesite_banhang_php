@@ -133,6 +133,30 @@ $total = 0;
 ?>
 <form method="post" action="">
     <div class="container my-4 cart-container">
+        
+        <!-- 4-Step Checkout Wizard Bar -->
+        <div class="checkout-wizard-bar d-none d-md-flex">
+            <div class="wizard-step active">
+                <div class="wizard-step-number">1</div>
+                <span>Giỏ hàng</span>
+            </div>
+            <i class="bi bi-chevron-right text-muted"></i>
+            <div class="wizard-step active">
+                <div class="wizard-step-number">2</div>
+                <span>Thông tin giao hàng</span>
+            </div>
+            <i class="bi bi-chevron-right text-muted"></i>
+            <div class="wizard-step">
+                <div class="wizard-step-number">3</div>
+                <span>Thanh toán QR PayOS</span>
+            </div>
+            <i class="bi bi-chevron-right text-muted"></i>
+            <div class="wizard-step">
+                <div class="wizard-step-number">4</div>
+                <span>Hoàn tất đơn hàng</span>
+            </div>
+        </div>
+
         <div class="cart-layout">
             <div class="cart-left">
                 <?php if (empty($cart)) { ?>
