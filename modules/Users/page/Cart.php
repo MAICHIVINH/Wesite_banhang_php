@@ -51,36 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             swal_alert('success', 'Mua hàng thành công!', '', 'index.php');
             exit;
         } else {
-            // $totalAmount = 0;
-            // $items       = [];
-            // foreach ($_POST['selected'] as $id) {
-            //     $p   = $product->getById($id);
-            //     $qty = $cart[$id]['quantity'];
-
-            //     $totalAmount += $p['price'] * $qty;
-            //     $items[] = ['name' => $p['name'], 'quantity' => $qty, 'price' => $p['price']];
-            // }
-
-            // $orderData = [
-            //     'total_amount' => $totalAmount,
-            //     'status'       => 'pending',
-            //     'user_id'      => $userData->id,
-            // ];
-            // $order = $orderController->add($orderData);
-
-            // require_once 'PayOSHelper.php';
-            // $payos   = new PayOSHelper();
-            // $linkRes = $payos->createLink(
-            //     orderCode: (int) $order['order_id'],
-            //     amount: $totalAmount,
-            //     description: 'Thanh toán đơn #' . $order['order_id'],
-            //     items: $items
-            // );
-            // echo "<script>
-            //                 alert('Thanh toán onl chưa xử lý');
-            //             </script>";
-            swal_alert('warning', 'Thông báo', 'Thanh toán online chưa được xử lý', 'index.php');
-
+            require './modules/Users/logic/checkout_online.php';
             exit;
         }
     }
@@ -244,8 +215,9 @@ $total = 0;
 
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="payment_method" id="online" value="online">
-                        <label class="form-check-label" for="online">
-                            Thanh toán Online (VNPay, Momo…)
+                        <label class="form-check-label fw-semibold" for="online">
+                            <span class="text-primary"><i class="bi bi-qr-code-scan me-1"></i> Thanh toán Online</span>
+                            <span class="d-block small text-muted">Ví MoMo, ShopeePay, ZaloPay, VietQR (Napas247)</span>
                         </label>
                     </div>
                 </div>
