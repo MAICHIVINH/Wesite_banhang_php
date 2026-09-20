@@ -240,36 +240,50 @@ $qrUrl = "https://img.vietqr.io/image/MB-{$bankAccountNo}-compact2.jpg?amount={$
 
 <script>
     function copyToClipboard(text, label) {
-        navigator.clipboard.writeText(text).then(function() {
-            Swal.fire({
-                icon: 'success',
-                title: 'Đã sao chép!',
-                text: label + ' đã được lưu vào khay nhớ tạm.',
-                timer: 1500,
-                showConfirmButton: false
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(text).then(function() {
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Đã sao chép!',
+                        text: label + ' đã được lưu vào khay nhớ tạm.',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                } else {
+                    alert(label + ' đã được sao chép: ' + text);
+                }
+            }).catch(function() {
+                alert('Đã sao chép: ' + text);
             });
-        }, function(err) {
+        } else {
             alert('Đã sao chép: ' + text);
-        });
+        }
     }
 
     function confirmPayment(event) {
-        event.preventDefault();
+        if (event) event.preventDefault();
         const form = document.getElementById('confirmPaymentForm');
-        Swal.fire({
-            title: 'Xác nhận chuyển khoản?',
-            html: 'Vui lòng đảm bảo bạn đã quét mã QR hoặc chuyển khoản đúng số tiền <b><?= number_format($totalAmount, 0, ',', '.') ?>₫</b> kèm cú pháp <b><?= htmlspecialchars($transferNote) ?></b>.<br><br><small class="text-muted">Hệ thống và Admin sẽ đối soát giao dịch này.</small>',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#10b981',
-            cancelButtonColor: '#64748b',
-            confirmButtonText: '<i class="bi bi-check-lg me-1"></i> Đúng vậy, tôi đã chuyển',
-            cancelButtonText: 'Chưa, để tôi kiểm tra lại'
-        }).then((result) => {
-            if (result.isConfirmed) {
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                title: 'Xác nhận chuyển khoản?',
+                html: 'Vui lòng đảm bảo bạn đã quét mã QR hoặc chuyển khoản đúng số tiền <b><?= number_format($totalAmount, 0, ',', '.') ?>₫</b> kèm cú pháp <b><?= htmlspecialchars($transferNote) ?></b>.<br><br><small class="text-muted">Hệ thống và Admin sẽ đối soát giao dịch này.</small>',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#10b981',
+                cancelButtonColor: '#64748b',
+                confirmButtonText: '<i class="bi bi-check-lg me-1"></i> Đúng vậy, tôi đã chuyển',
+                cancelButtonText: 'Chưa, để tôi kiểm tra lại'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        } else {
+            if (confirm("Xác nhận bạn đã chuyển khoản thành công?")) {
                 form.submit();
             }
-        });
+        }
         return false;
     }
 </script>

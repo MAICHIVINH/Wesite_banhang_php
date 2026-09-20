@@ -74,6 +74,7 @@ if (isset($_GET['ajax_get_user_chat']) || isset($_POST['ajax_send_user_chat'])) 
     <link rel="stylesheet" href="./Style/Users/OrderTracking.css?v=4">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .chat-box {
             position: fixed;
