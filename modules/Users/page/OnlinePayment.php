@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $payId = (int)($orderData['payment_id'] ?? 0);
     if ($payId > 0 && isset($paymentController)) {
         $paymentController->update($payId, [
-            'status' => 'Đã thanh toán (MoMo/ShopeePay/VietQR)',
+            'status' => 'Đã xác nhận chuyển khoản (Chờ đối soát)',
             'paid_at' => date("Y-m-d H:i:s")
         ]);
     }
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         }
     }
 
-    swal_alert('success', 'Thanh toán thành công!', 'Cảm ơn bạn đã hoàn tất thanh toán qua MoMo/ShopeePay/VietQR.', 'index.php?subpage=modules/Users/page/CheckOrder.php');
+    swal_alert('success', 'Đã ghi nhận thông báo thanh toán!', 'Cảm ơn bạn! Hệ thống sẽ kiểm tra giao dịch và chuyển trạng thái đơn hàng ngay khi nhận được tiền.', 'index.php?subpage=modules/Users/page/CheckOrder.php');
     exit;
 }
 
@@ -225,7 +225,7 @@ $qrUrl = "https://img.vietqr.io/image/MB-{$bankAccountNo}-compact2.jpg?amount={$
                         <a href="index.php?subpage=modules/Users/page/Cart.php" class="btn btn-outline-secondary rounded-pill px-4">
                             <i class="bi bi-arrow-left me-1"></i> Quay lại giỏ hàng
                         </a>
-                        <form method="POST" class="d-inline mb-0">
+                        <form method="POST" id="confirmPaymentForm" class="d-inline mb-0" onsubmit="return confirmPayment(event)">
                             <input type="hidden" name="action" value="confirm_online_payment">
                             <button type="submit" class="btn btn-success rounded-pill px-4 py-2 fw-bold shadow-sm">
                                 <i class="bi bi-check-circle-fill me-1"></i> Tôi đã hoàn tất thanh toán
@@ -251,5 +251,25 @@ $qrUrl = "https://img.vietqr.io/image/MB-{$bankAccountNo}-compact2.jpg?amount={$
         }, function(err) {
             alert('Đã sao chép: ' + text);
         });
+    }
+
+    function confirmPayment(event) {
+        event.preventDefault();
+        const form = document.getElementById('confirmPaymentForm');
+        Swal.fire({
+            title: 'Xác nhận chuyển khoản?',
+            html: 'Vui lòng đảm bảo bạn đã quét mã QR hoặc chuyển khoản đúng số tiền <b><?= number_format($totalAmount, 0, ',', '.') ?>₫</b> kèm cú pháp <b><?= htmlspecialchars($transferNote) ?></b>.<br><br><small class="text-muted">Hệ thống và Admin sẽ đối soát giao dịch này.</small>',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#10b981',
+            cancelButtonColor: '#64748b',
+            confirmButtonText: '<i class="bi bi-check-lg me-1"></i> Đúng vậy, tôi đã chuyển',
+            cancelButtonText: 'Chưa, để tôi kiểm tra lại'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+        return false;
     }
 </script>
