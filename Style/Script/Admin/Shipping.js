@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const mapIframe = document.getElementById("mapIframe");
     const addressEncoded = encodeURIComponent(order.senderAddress);
-    mapIframe.src = `https://maps.google.com/maps?q=${addressEncoded}&z=15&output=embed`;
+    mapIframe.src = `https://maps.google.com/maps?q=${addressEncoded}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
 
     const modal = new bootstrap.Modal(
       document.getElementById("senderLocationModal")
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const mapIframe = document.getElementById("current-location-map");
     const encodedAddress = encodeURIComponent(order.currentAddress);
-    mapIframe.src = `https://maps.google.com/maps?q=${encodedAddress}&z=15&output=embed`;
+    mapIframe.src = `https://maps.google.com/maps?q=${encodedAddress}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
 
     const modal = new bootstrap.Modal(
       document.getElementById("currentLocationModal")

@@ -79,7 +79,7 @@ require_once 'modules/Admin/Shipping/ViewCurrentLocation.php';
                                                                                 "senderPhone" => $order["Phone"],
                                                                                 "senderAddress" => $order["Address"]
                                                                             ]) ?>)'>
-                                                    <i class="bi bi-geo-alt-fill text-info"></i> Xem vị trí người gửi
+                                                    <i class="bi bi-geo-alt-fill text-info"></i> Xem vị trí người nhận
                                                 </button>
                                             </li>
                                             <li>
