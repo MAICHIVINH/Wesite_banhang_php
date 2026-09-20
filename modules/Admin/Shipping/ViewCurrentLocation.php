@@ -13,9 +13,8 @@
           <li>Địa chỉ hiện tại của đơn hàng: <strong id="current-address"></strong></li>
           <li>Trạng thái: <strong id="current-order-status"></strong></li>
         </ul>
-        <div id="currentMap" style="height: 380px; width: 100%; border-radius: 12px; border: 2px solid #e2e8f0; position: relative; z-index: 1;" class="shadow-sm"></div>
-        <div class="ratio ratio-16x9 d-none" id="currentMapIframeWrapper">
-          <iframe id="current-location-map" class="border rounded shadow" allowfullscreen loading="lazy"></iframe>
+        <div class="ratio ratio-16x9 border rounded-3 shadow-sm overflow-hidden">
+          <iframe id="current-location-map" style="border:0; width:100%; height:100%;" allowfullscreen loading="lazy"></iframe>
         </div>
       </div>
     </div>

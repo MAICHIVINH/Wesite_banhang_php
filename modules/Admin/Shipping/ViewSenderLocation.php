@@ -18,13 +18,12 @@
           <li>Địa chỉ nhận: <strong id="modal_sender_address"></strong></li>
         </ul>
 
-        <!-- Bản đồ to full chiều ngang -->
-        <div id="receiverMap" style="height: 380px; width: 100%; border-radius: 12px; border: 2px solid #e2e8f0; position: relative; z-index: 1;" class="shadow-sm"></div>
-        <div class="ratio ratio-16x9 border rounded shadow d-none" id="mapIframeWrapper">
+        <!-- Bản đồ Google Maps chỉ đường -->
+        <div class="ratio ratio-16x9 border rounded-3 shadow-sm overflow-hidden">
           <iframe
             id="mapIframe"
             src=""
-            style="border:0;"
+            style="border:0; width:100%; height:100%;"
             allowfullscreen
             loading="lazy">
           </iframe>
