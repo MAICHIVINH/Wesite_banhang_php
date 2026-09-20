@@ -196,7 +196,6 @@ if (isset($_GET['ajax_get_admin_chat']) || isset($_POST['ajax_send_admin_chat'])
     <?php
     require_once './modules/Admin/Chat/AdminChat.php';
     ?>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./Style/Script/User/Chat.js"></script>
     <script src="./Style/Script/Admin/Customer.js"></script>
     <script src="./Style/Script/User/Detail.js"></script>
