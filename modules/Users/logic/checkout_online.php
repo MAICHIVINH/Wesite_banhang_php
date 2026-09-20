@@ -6,27 +6,34 @@ if (empty($_POST['selected'])) {
     exit;
 }
 
+$branchId = $_POST['branch_id'] ?? '';
+if (empty($branchId)) {
+    swal_alert('warning', 'Chưa chọn chi nhánh', 'Vui lòng chọn chi nhánh nhận hàng.', 'index.php?subpage=modules/Users/page/Cart.php');
+    exit;
+}
+
 $totalAmount = 0;
 $itemsToBuy = [];
 
 foreach ($_POST['selected'] as $id) {
     if (isset($cart[$id])) {
-        $p = $product->getById($id);
-        $qty = (int)$cart[$id]['quantity'];
-        $originalPrice = (float)$p['price'];
-        $discount = (float)($p['discount'] ?? 0);
-        $finalPrice = $originalPrice * (1 - $discount / 100);
+        $productById = $product->getById($id);
+        $priceProduct = (float)$productById['price'];
+        if (isset($productById['discount']) && $productById['discount'] > 0) {
+            $priceProduct *= (1 - $productById['discount'] / 100);
+        }
+        $quantity = (int)$cart[$id]['quantity'];
 
-        $totalAmount += $finalPrice * $qty;
+        $totalAmount += $priceProduct * $quantity;
         $itemsToBuy[$id] = [
             'product_id' => $id,
-            'quantity' => $qty,
-            'price' => $finalPrice
+            'quantity' => $quantity,
+            'unit_price' => $priceProduct
         ];
     }
 }
 
-// Create payment record
+// 1. Create Payment record
 $dataPayment = [
     "method" => 'Thanh toán Online (MoMo/ShopeePay/VietQR)',
     "status" => 'Chờ thanh toán',
@@ -34,57 +41,48 @@ $dataPayment = [
 ];
 $paymentId = $paymentController->add($dataPayment);
 
-// Create shipping record
-$userAddr = isset($userData->Address) ? $userData->Address : '';
-$userPhone = isset($userData->Phone) ? $userData->Phone : '';
-
+// 2. Create Shipping record
+$branchById = $branchController->getById($branchId);
 $dataShipping = [
-    "user_id" => $userData->id,
-    "address" => !empty($_POST['address']) ? $_POST['address'] : (!empty($userAddr) ? $userAddr : 'Nhận tại cửa hàng'),
-    "phone" => !empty($_POST['phone']) ? $_POST['phone'] : (!empty($userPhone) ? $userPhone : '0123456789'),
-    "status_id" => 1,
-    "isDeleted" => 0
+    'address' => isset($branchById['address']) ? $branchById['address'] : 'Nhận tại cửa hàng',
+    'method' => 'Chưa có',
+    'status' => 'Chờ giao',
+    'isDeleted' => 0,
 ];
-$shippingId = $shippingController->add($dataShipping);
 
-// Create Order
+$resShipping = $shippingController->add($dataShipping);
+$shippingId = isset($resShipping['shipping']) ? $resShipping['shipping'] : null;
+
+// 3. Create Order record
+$code = strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 8));
+$note = trim($_POST['note'] ?? '');
+
 $dataOrder = [
-    "user_id" => $userData->id,
-    "status_id" => 1,
-    "shipping_id" => $shippingId,
-    "payment_id" => $paymentId,
-    "branch_id" => $_POST['branch_id'],
-    "note" => trim($_POST['note'] ?? ''),
-    "total_price" => $totalAmount,
-    "created_at" => date("Y-m-d H:i:s"),
-    "isDeleted" => 0
+    'code' => $code,
+    'total_amount' => $totalAmount,
+    'status_id' => 1, // Chờ xử lý
+    'user_id' => $userData->id,
+    'note' => $note,
+    'payment_id' => $paymentId,
+    'branch_id' => $branchId,
+    'shipping_id' => $shippingId,
+    'isDeleted' => 0
 ];
 
-$orderRes = $orderController->add($dataOrder);
-$orderId = null;
-
-if (is_array($orderRes)) {
-    $orderId = $orderRes['id'] ?? ($orderRes['order_id'] ?? null);
-} else if (is_numeric($orderRes)) {
-    $orderId = (int)$orderRes;
-}
+$resOrder = $orderController->add($dataOrder);
+$orderId = isset($resOrder['order_id']) ? $resOrder['order_id'] : null;
 
 if ($orderId) {
+    // 4. Create OrderItems & remove from cart
     foreach ($itemsToBuy as $item) {
         $dataOrderItem = [
-            "order_id" => $orderId,
-            "product_id" => $item['product_id'],
-            "quantity" => $item['quantity'],
-            "price" => $item['price']
+            'quantity' => $item['quantity'],
+            'unit_price' => $item['unit_price'],
+            'product_id' => $item['product_id'],
+            'order_id' => $orderId,
         ];
+
         $orderItemController->add($dataOrderItem);
-
-        // Deduct inventory if stock available
-        if (method_exists($inventoryController, 'decrementStock')) {
-            $inventoryController->decrementStock($item['product_id'], $_POST['branch_id'], $item['quantity']);
-        }
-
-        // Remove purchased item from cart session
         unset($_SESSION['cart'][$item['product_id']]);
     }
 

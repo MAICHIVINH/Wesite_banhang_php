@@ -14,7 +14,7 @@ if (!$orderData) {
 }
 
 $orderItems = $orderItemController->getOrderItemById($orderId);
-$totalAmount = (float)($orderData['total_price'] ?? 0);
+$totalAmount = (float)($orderData['total_amount'] ?? $orderData['total_price'] ?? 0);
 $transferNote = "GAR" . $orderId;
 $bankAccountNo = "0388686789";
 $bankName = "MBBank (Ngân hàng Quân Đội)";
