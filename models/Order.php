@@ -123,10 +123,11 @@ class Order extends Model
         int    $offset     = 0
     ) {
         $sql = "
-            SELECT  o.*, u.* ,s.name AS status_name, o.id AS order_id, sh.status AS status_shipping
+            SELECT  o.*, u.* ,s.name AS status_name, o.id AS order_id, sh.status AS status_shipping, p.status AS payment_status, p.method AS payment_method
             FROM    orders o
             JOIN    status s   ON o.status_id = s.id
             JOIN    shipping sh ON sh.id = o.shipping_id
+            LEFT JOIN payments p ON p.id = o.payment_id
             JOIN    users u ON o.user_id = u.id
             WHERE   o.user_id  = :user_id
               AND   o.isDeleted = 0

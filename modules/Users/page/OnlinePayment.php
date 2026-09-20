@@ -27,6 +27,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         ]);
     }
 
+    // Advance Order status_id from 1 (Chờ xử lý) to 2 (Đã xác nhận)
+    if (isset($orderController)) {
+        $orderController->edit($orderId, [
+            'status_id' => 2
+        ]);
+    }
+
     // Remove purchased items from cart ONLY ON CONFIRMATION
     $itemsPurchased = $orderItemController->getOrderItemById($orderId);
     if (isset($itemsPurchased) && is_array($itemsPurchased)) {

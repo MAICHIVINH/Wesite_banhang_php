@@ -167,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
                     <div class="order-item">
                         <div class="order-item-header d-flex justify-content-between align-items-center flex-wrap gap-2">
                             <div>
-                                <h6>Mã đơn: <?= htmlspecialchars($order['code']) ?> | Trạng thái: <?= htmlspecialchars($order['status_name']) ?></h6>
+                                <h6>Mã đơn: <?= htmlspecialchars($order['code']) ?> | Trạng thái đơn: <span class="badge bg-primary text-white me-1"><?= htmlspecialchars($order['status_name']) ?></span><?php if (!empty($order['payment_status'])) { ?> | Thanh toán: <span class="badge bg-info text-dark"><?= htmlspecialchars($order['payment_status']) ?></span><?php } ?></h6>
                             </div>
                             <div class="d-flex align-items-center gap-2">
                                 <?php if ($order['status_id'] === 4 && $order['status_shipping'] === 'Hoàn thành') { ?>
