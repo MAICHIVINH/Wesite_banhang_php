@@ -13,7 +13,7 @@ $products = $product->getFilterProducts($id_category, $id_supplier, $keyword, $l
 // var_dump($products);
 ?>
 
-<div class="container mt-3 product-list">
+<div class="product-list">
     <div class="row g-3">
         <?php if (!empty($products)): ?>
             <?php foreach ($products as $item) {
