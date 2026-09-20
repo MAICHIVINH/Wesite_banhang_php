@@ -118,6 +118,35 @@ if (empty($activeBanners) && isset($bannerController)) {
 }
 ?>
 
+<!-- Top Notification & Utility Bar Strip (CellphoneS Style) -->
+<div class="top-bar-cellphones d-none d-md-block">
+    <div class="container-fluid px-3 px-lg-4 d-flex justify-content-between align-items-center">
+        <!-- Left: Ticker Highlights -->
+        <div class="top-bar-ticker">
+            <span><i class="bi bi-arrow-repeat text-warning"></i> <strong>Thu cũ giá ngon</strong> - Lên đời tiết kiệm</span>
+            <span class="top-bar-ticker-separator">•</span>
+            <span><i class="bi bi-shield-check text-warning"></i> Sản phẩm <strong>Chính hãng</strong> - Xuất VAT đầy đủ</span>
+            <span class="top-bar-ticker-separator">•</span>
+            <span><i class="bi bi-truck text-warning"></i> <strong>Giao nhanh - Miễn phí</strong> cho đơn từ 300k</span>
+        </div>
+
+        <!-- Right: Topbar Utilities -->
+        <div class="top-bar-utilities">
+            <a href="index.php?subpage=modules/Users/page/ShoppingGuide.php">
+                <i class="bi bi-geo-alt-fill text-warning"></i> Cửa hàng gần bạn
+            </a>
+            <span class="divider">|</span>
+            <a href="index.php?subpage=modules/Users/page/CheckOrder.php">
+                <i class="bi bi-file-earmark-text text-warning"></i> Tra cứu đơn hàng
+            </a>
+            <span class="divider">|</span>
+            <a href="tel:18006789" class="fw-bold">
+                <i class="bi bi-telephone-fill text-warning"></i> 1800.6789
+            </a>
+        </div>
+    </div>
+</div>
+
 <!-- CellphoneS Red Navbar -->
 <nav class="navbar navbar-expand-lg navbar-cellphones sticky-top" style="z-index: 1031;">
     <div class="container-fluid px-3 px-lg-4">

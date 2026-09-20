@@ -88,6 +88,68 @@ body {
     margin: auto;
 }
 
+/* CellphoneS Top Notification & Utility Strip */
+.top-bar-cellphones {
+  background: linear-gradient(90deg, #b20014 0%, #d70018 50%, #b20014 100%);
+  color: #ffffff;
+  font-size: 12px;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.top-bar-ticker {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.top-bar-ticker span,
+.top-bar-ticker a {
+  color: rgba(255, 255, 255, 0.95);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.top-bar-ticker strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.top-bar-ticker-separator {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 10px;
+}
+
+.top-bar-utilities {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.top-bar-utilities a {
+  color: #ffffff !important;
+  text-decoration: none !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+
+.top-bar-utilities a:hover {
+  opacity: 0.85;
+}
+
+.top-bar-utilities .divider {
+  color: rgba(255, 255, 255, 0.4);
+}
+
 /* CellphoneS Red Navbar Overhaul */
 .navbar-cellphones {
   background-color: #d70018 !important;
