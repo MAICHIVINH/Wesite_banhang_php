@@ -1,4 +1,9 @@
 <?php
+if (empty($userData) || !isset($userData->id)) {
+    swal_alert('warning', 'Chưa đăng nhập', 'Vui lòng đăng nhập để thanh toán đơn hàng.', 'index.php');
+    exit;
+}
+
 $orderId = isset($_GET['order_id']) ? (int)$_GET['order_id'] : 0;
 
 if ($orderId <= 0) {

@@ -10,7 +10,12 @@ $page      = max(1, (int)($_GET['page'] ?? 1));
 $limit     = 2;
 $offset    = ($page - 1) * $limit;
 
-$userId = $userData->id;
+if (empty($userData) || !isset($userData->id)) {
+    swal_alert('warning', 'Chưa đăng nhập', 'Vui lòng đăng nhập để tra cứu đơn hàng của bạn.', 'index.php');
+    exit;
+}
+
+$userId = (int)$userData->id;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnReview'])) {
     $order_id = $_POST['order_id'];
