@@ -31,7 +31,7 @@ $getCategory = $category->getAll();
 
 <!-- Hero Section 3-Column CellphoneS Layout -->
 <div class="container mt-3">
-    <div class="row g-3">
+    <div class="row g-3 align-items-stretch">
         <!-- Column 1: Vertical Category Menu (Desktop) -->
         <div class="col-lg-3 d-none d-lg-block">
             <div class="hero-category-menu">
@@ -46,7 +46,7 @@ $getCategory = $category->getAll();
                             <?php if (!empty($catItem['icon'])): ?>
                                 <img src="<?= htmlspecialchars($catItem['icon']) ?>" alt="<?= htmlspecialchars($catItem['name']) ?>" style="width: 22px; height: 22px; object-fit: contain;">
                             <?php else: ?>
-                                <i class="bi bi-laptop text-danger"></i>
+                                <i class="bi bi-laptop text-danger fs-6"></i>
                             <?php endif; ?>
                             <span><?= htmlspecialchars($catItem['name']) ?></span>
                         </div>
@@ -55,41 +55,67 @@ $getCategory = $category->getAll();
                     <?php
                     $menuCount++;
                 }
+                // Extra utility links if categories < 7 to fill menu height cleanly
+                if ($menuCount < 7) {
+                    ?>
+                    <a href="index.php?subpage=modules/Users/page/ShoppingGuide.php" class="hero-category-item">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-arrow-repeat text-danger fs-6"></i>
+                            <span>Thu cũ đổi mới</span>
+                        </div>
+                        <i class="bi bi-chevron-right small text-muted"></i>
+                    </a>
+                    <a href="index.php?subpage=modules/Users/page/WarrantyPolicy.php" class="hero-category-item">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-percent text-danger fs-6"></i>
+                            <span>Khuyến mãi HOT</span>
+                        </div>
+                        <i class="bi bi-chevron-right small text-muted"></i>
+                    </a>
+                    <?php
+                }
                 ?>
             </div>
         </div>
 
         <!-- Column 2: Center Main Carousel -->
         <div class="col-lg-6 col-md-8">
-            <div id="heroMainCarousel" class="carousel slide rounded-3 overflow-hidden shadow-sm" data-bs-ride="carousel">
+            <div id="heroMainCarousel" class="carousel slide hero-main-carousel" data-bs-ride="carousel" data-bs-interval="4000">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#heroMainCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#heroMainCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#heroMainCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="https://file.hstatic.net/200000722513/file/thang_06_banner_build_pc_top_promotion_banner_2.png" class="img-fluid w-100" alt="Banner 1" style="height: 380px; object-fit: cover;">
+                        <img src="https://file.hstatic.net/200000722513/file/thang_06_banner_build_pc_top_promotion_banner_2.png" class="d-block w-100" alt="Banner Build PC">
                     </div>
                     <div class="carousel-item">
-                        <img src="https://file.hstatic.net/200000722513/file/banner_790x250_tai_nghe_6f6dcb17d3a54fcc88b3de96762d2d41.jpg" class="img-fluid w-100" alt="Banner 2" style="height: 380px; object-fit: cover;">
+                        <img src="https://file.hstatic.net/200000722513/file/laptop_gaming_top_promotion_banner.png" class="d-block w-100" alt="Banner Laptop Gaming">
                     </div>
                     <div class="carousel-item">
-                        <img src="https://theme.hstatic.net/200000722513/1001090675/14/headblog_banner.jpg?v=9171" class="img-fluid w-100" alt="Banner 3" style="height: 380px; object-fit: cover;">
+                        <img src="https://file.hstatic.net/200000722513/file/thang_06_banner_man_hinh_top_promotion_banner.png" class="d-block w-100" alt="Banner Màn Hình">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#heroMainCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon bg-dark rounded-circle" aria-hidden="true"></span>
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Trước</span>
                 </button>
                 <button class="carousel-control-next" type="button" data-bs-target="#heroMainCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon bg-dark rounded-circle" aria-hidden="true"></span>
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Sau</span>
                 </button>
             </div>
         </div>
 
         <!-- Column 3: Right Stacked Promo Banners -->
         <div class="col-lg-3 col-md-4 d-none d-md-block">
-            <div class="d-flex flex-column gap-2" style="height: 100%;">
-                <div class="rounded-3 overflow-hidden shadow-sm flex-grow-1">
-                    <img src="https://file.hstatic.net/200000722513/file/bot_promotion_banner_small_2_2ad55c2345c64fbfb87dab4957b33914.png" class="img-fluid w-100 h-100" alt="Promo 1" style="object-fit: cover; max-height: 185px;">
+            <div class="hero-right-banners">
+                <div class="hero-right-banner-item">
+                    <img src="https://file.hstatic.net/200000722513/file/bot_promotion_banner_small_2_2ad55c2345c64fbfb87dab4957b33914.png" alt="Promo PC Poseidon">
                 </div>
-                <div class="rounded-3 overflow-hidden shadow-sm flex-grow-1">
-                    <img src="https://file.hstatic.net/200000722513/file/thang_06_banner_ghe_top_promotion_banner_1.png" class="img-fluid w-100 h-100" alt="Promo 2" style="object-fit: cover; max-height: 185px;">
+                <div class="hero-right-banner-item">
+                    <img src="https://file.hstatic.net/200000722513/file/thang_06_banner_ghe_top_promotion_banner_1.png" alt="Promo Ghế Gaming">
                 </div>
             </div>
         </div>
