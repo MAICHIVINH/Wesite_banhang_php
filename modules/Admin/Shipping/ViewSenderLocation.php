@@ -19,7 +19,8 @@
         </ul>
 
         <!-- Bản đồ to full chiều ngang -->
-        <div class="ratio ratio-16x9 border rounded shadow">
+        <div id="receiverMap" style="height: 380px; width: 100%; border-radius: 12px; border: 2px solid #e2e8f0; position: relative; z-index: 1;" class="shadow-sm"></div>
+        <div class="ratio ratio-16x9 border rounded shadow d-none" id="mapIframeWrapper">
           <iframe
             id="mapIframe"
             src=""

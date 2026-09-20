@@ -93,9 +93,8 @@ if (isset($_GET['ajax_get_admin_chat']) || isset($_POST['ajax_send_admin_chat'])
     <link rel="stylesheet" href="./Style/Admin/Chat.css">
     <link rel="stylesheet" href="./Style/Admin/Product.css">
     <link rel="stylesheet" href="./Style/Admin/AddProduct.css">
-    <link rel="stylesheet" href="./Style/Admin/Customer.css">
-    <link rel="stylesheet" href="./Style/Admin/notification.css">
-
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 
 <body>
