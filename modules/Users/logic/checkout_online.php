@@ -87,7 +87,7 @@ if ($orderId) {
     }
 
     // Redirect to Online Payment Dynamic QR page
-    header("Location: index.php?subpage=modules/Users/page/OnlinePayment.php&order_id=" . $orderId);
+    echo "<script>window.location.href = 'index.php?subpage=modules/Users/page/OnlinePayment.php&order_id=" . $orderId . "';</script>";
     exit;
 } else {
     swal_alert('error', 'Lỗi tạo đơn hàng', 'Hệ thống không thể tạo đơn hàng thanh toán online.', 'index.php?subpage=modules/Users/page/Cart.php');
