@@ -5,9 +5,11 @@ $featuredProducts = $product->getLatestProducts();
 // Sản phẩm giảm giá
 $saleProducts = $product->getLatestSaleProducts();
 
-
 $getCategory = $category->getAll();
 
+// Banner động từ cơ sở dữ liệu
+$sliderBanners = isset($bannerController) ? $bannerController->getByPosition('slider_main') : [];
+$sideBanners = isset($bannerController) ? $bannerController->getByPosition('side_banner') : [];
 ?>
 
 <style>
@@ -62,22 +64,43 @@ $getCategory = $category->getAll();
         <!-- Column 2: Center Main Carousel -->
         <div class="col-lg-6 col-md-8">
             <div id="heroMainCarousel" class="carousel slide hero-main-carousel" data-bs-ride="carousel" data-bs-interval="4000">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#heroMainCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#heroMainCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#heroMainCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                </div>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="https://file.hstatic.net/200000722513/file/thang_06_banner_build_pc_top_promotion_banner_2.png" class="d-block w-100" alt="Banner Build PC">
+                <?php if (!empty($sliderBanners)): ?>
+                    <div class="carousel-indicators">
+                        <?php foreach ($sliderBanners as $index => $b): ?>
+                            <button type="button" data-bs-target="#heroMainCarousel" data-bs-slide-to="<?= $index ?>" class="<?= $index === 0 ? 'active' : '' ?>" aria-current="<?= $index === 0 ? 'true' : 'false' ?>"></button>
+                        <?php endforeach; ?>
                     </div>
-                    <div class="carousel-item">
-                        <img src="https://file.hstatic.net/200000722513/file/laptop_gaming_top_promotion_banner.png" class="d-block w-100" alt="Banner Laptop Gaming">
+                    <div class="carousel-inner">
+                        <?php foreach ($sliderBanners as $index => $b): ?>
+                            <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                                <?php if (!empty($b['link'])): ?>
+                                    <a href="<?= htmlspecialchars($b['link']) ?>">
+                                        <img src="<?= htmlspecialchars($b['image']) ?>" class="d-block w-100" alt="<?= htmlspecialchars($b['title'] ?? 'Banner') ?>">
+                                    </a>
+                                <?php else: ?>
+                                    <img src="<?= htmlspecialchars($b['image']) ?>" class="d-block w-100" alt="<?= htmlspecialchars($b['title'] ?? 'Banner') ?>">
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
-                    <div class="carousel-item">
-                        <img src="https://file.hstatic.net/200000722513/file/thang_06_banner_man_hinh_top_promotion_banner.png" class="d-block w-100" alt="Banner Màn Hình">
+                <?php else: ?>
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#heroMainCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#heroMainCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#heroMainCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
                     </div>
-                </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="https://file.hstatic.net/200000722513/file/thang_06_banner_build_pc_top_promotion_banner_2.png" class="d-block w-100" alt="Banner Build PC">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="https://file.hstatic.net/200000722513/file/laptop_gaming_top_promotion_banner.png" class="d-block w-100" alt="Banner Laptop Gaming">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="https://file.hstatic.net/200000722513/file/thang_06_banner_man_hinh_top_promotion_banner.png" class="d-block w-100" alt="Banner Màn Hình">
+                        </div>
+                    </div>
+                <?php endif; ?>
                 <button class="carousel-control-prev" type="button" data-bs-target="#heroMainCarousel" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Trước</span>
@@ -92,12 +115,33 @@ $getCategory = $category->getAll();
         <!-- Column 3: Right Stacked Promo Banners -->
         <div class="col-lg-3 col-md-4 d-none d-md-block">
             <div class="hero-right-banners">
-                <div class="hero-right-banner-item">
-                    <img src="https://file.hstatic.net/200000722513/file/bot_promotion_banner_small_2_2ad55c2345c64fbfb87dab4957b33914.png" alt="Promo PC Poseidon">
-                </div>
-                <div class="hero-right-banner-item">
-                    <img src="https://file.hstatic.net/200000722513/file/thang_06_banner_ghe_top_promotion_banner_1.png" alt="Promo Ghế Gaming">
-                </div>
+                <?php if (!empty($sideBanners)): ?>
+                    <?php 
+                    $sideCount = 0;
+                    foreach ($sideBanners as $b):
+                        if ($sideCount >= 2) break;
+                    ?>
+                        <div class="hero-right-banner-item">
+                            <?php if (!empty($b['link'])): ?>
+                                <a href="<?= htmlspecialchars($b['link']) ?>">
+                                    <img src="<?= htmlspecialchars($b['image']) ?>" alt="<?= htmlspecialchars($b['title'] ?? 'Side Banner') ?>">
+                                </a>
+                            <?php else: ?>
+                                <img src="<?= htmlspecialchars($b['image']) ?>" alt="<?= htmlspecialchars($b['title'] ?? 'Side Banner') ?>">
+                            <?php endif; ?>
+                        </div>
+                    <?php 
+                        $sideCount++;
+                    endforeach; 
+                    ?>
+                <?php else: ?>
+                    <div class="hero-right-banner-item">
+                        <img src="https://file.hstatic.net/200000722513/file/bot_promotion_banner_small_2_2ad55c2345c64fbfb87dab4957b33914.png" alt="Promo PC Poseidon">
+                    </div>
+                    <div class="hero-right-banner-item">
+                        <img src="https://file.hstatic.net/200000722513/file/thang_06_banner_ghe_top_promotion_banner_1.png" alt="Promo Ghế Gaming">
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
