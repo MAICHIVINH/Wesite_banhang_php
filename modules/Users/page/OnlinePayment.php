@@ -23,8 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
 
     // Remove purchased items from cart ONLY ON CONFIRMATION
-    if (isset($orderItems) && is_array($orderItems)) {
-        foreach ($orderItems as $item) {
+    $itemsPurchased = $orderItemController->getOrderItemById($orderId);
+    if (isset($itemsPurchased) && is_array($itemsPurchased)) {
+        foreach ($itemsPurchased as $item) {
             $pId = $item['product_id'] ?? null;
             if ($pId && isset($_SESSION['cart'][$pId])) {
                 unset($_SESSION['cart'][$pId]);
