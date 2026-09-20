@@ -55,25 +55,6 @@ $getCategory = $category->getAll();
                     <?php
                     $menuCount++;
                 }
-                // Extra utility links if categories < 7 to fill menu height cleanly
-                if ($menuCount < 7) {
-                    ?>
-                    <a href="index.php?subpage=modules/Users/page/ShoppingGuide.php" class="hero-category-item">
-                        <div class="d-flex align-items-center gap-2">
-                            <i class="bi bi-arrow-repeat text-danger fs-6"></i>
-                            <span>Thu cũ đổi mới</span>
-                        </div>
-                        <i class="bi bi-chevron-right small text-muted"></i>
-                    </a>
-                    <a href="index.php?subpage=modules/Users/page/WarrantyPolicy.php" class="hero-category-item">
-                        <div class="d-flex align-items-center gap-2">
-                            <i class="bi bi-percent text-danger fs-6"></i>
-                            <span>Khuyến mãi HOT</span>
-                        </div>
-                        <i class="bi bi-chevron-right small text-muted"></i>
-                    </a>
-                    <?php
-                }
                 ?>
             </div>
         </div>
