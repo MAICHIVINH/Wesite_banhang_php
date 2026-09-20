@@ -152,7 +152,8 @@ if (empty($activeBanners) && isset($bannerController)) {
     <div class="container">
         <!-- Logo -->
         <a class="brand-logo-cellphones me-3" href="index.php">
-            <i class="bi bi-laptop text-warning"></i> GARENA
+            <!-- <i class="bi bi-laptop text-warning"></i> GARENA -->
+             GARENA
         </a>
 
         <button class="navbar-toggler text-white border-white mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">

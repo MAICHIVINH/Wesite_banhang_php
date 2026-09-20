@@ -1,8 +1,15 @@
-    .form-check-input:checked {
-        background-color: #dc3545;
-        border-color: #dc3545;
-    }
+.form-check-input:checked {
+    background-color: #4f46e5;
+    border-color: #4f46e5;
+}
 
-    .btn-danger {
-        font-weight: bold;
-    }
+.btn-danger {
+    background-color: #4f46e5 !important;
+    border-color: #4f46e5 !important;
+    font-weight: bold;
+}
+
+.btn-danger:hover {
+    background-color: #4338ca !important;
+    border-color: #4338ca !important;
+}

@@ -28,15 +28,15 @@
 
 
 .hot-promo-box {
-  border: 1.5px dashed #d70018;
-  background: #fff5f5;
+  border: 1.5px dashed #4f46e5;
+  background: #eef2ff;
   border-radius: 10px;
   padding: 14px 18px;
   margin: 16px 0;
 }
 
 .hot-promo-title {
-  color: #d70018;
+  color: #4f46e5;
   font-weight: 700;
   font-size: 14.5px;
   display: flex;
@@ -50,7 +50,7 @@
   padding: 0;
   margin: 0;
   font-size: 13px;
-  color: #374151;
+  color: #334155;
 }
 
 .promo-item-list li {
@@ -61,7 +61,7 @@
 }
 
 .btn-buy-now {
-  background-color: #d70018 !important;
+  background-color: #4f46e5 !important;
   color: #ffffff !important;
   font-weight: 800;
   font-size: 16px;
@@ -71,16 +71,16 @@
   border: none;
   width: 100%;
   transition: background 0.2s ease;
-  box-shadow: 0 4px 12px rgba(215, 0, 24, 0.2);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
 }
 
 .btn-buy-now:hover {
-  background-color: #b20014 !important;
+  background-color: #4338ca !important;
 }
 
 .btn-add-cart-outline {
-  border: 2px solid #d70018 !important;
-  color: #d70018 !important;
+  border: 2px solid #4f46e5 !important;
+  color: #4f46e5 !important;
   font-weight: 700;
   background: #ffffff;
   border-radius: 8px;
@@ -90,11 +90,11 @@
 }
 
 .btn-add-cart-outline:hover {
-  background: #fff5f5;
+  background: #eef2ff;
 }
 
 .variant-btn-pill {
-  border: 1px solid #e5e7eb;
+  border: 1px solid #e2e8f0;
   background: #fff;
   border-radius: 8px;
   padding: 8px 14px;

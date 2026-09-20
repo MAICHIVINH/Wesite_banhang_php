@@ -73,7 +73,7 @@
 
         <div class="d-flex flex-column flex-md-row align-items-center justify-content-between text-muted small gap-2">
             <div>
-                © 2025 <strong>SHOP GARENA</strong>. Tất cả quyền được bảo lưu. Thiết kế phong cách CellphoneS Red Classic.
+                © 2025 <strong>SHOP GARENA</strong>. Tất cả quyền được bảo lưu.
             </div>
             <div>
                 Phát triển bởi: <strong class="text-dark">Mai Chí Vĩnh</strong>

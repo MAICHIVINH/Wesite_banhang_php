@@ -60,17 +60,17 @@ if (isset($_GET['ajax_get_user_chat']) || isset($_POST['ajax_send_user_chat'])) 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-    <link rel="stylesheet" href="./Style/Users/Header.css?v=3">
-    <link rel="stylesheet" href="./Style/Users/Detail.css?v=3">
-    <link rel="stylesheet" href="./Style/Users/Sidebar.css?v=3">
-    <link rel="stylesheet" href="./Style/Users/Cart.css?v=3">
-    <link rel="stylesheet" href="./Style/Users/Chat.css?v=3">
-    <link rel="stylesheet" href="./Style/Users/Review.css?v=3">
-    <link rel="stylesheet" href="./Style/Users/Supplier.css?v=3">
-    <link rel="stylesheet" href="./Style/Users/Product.css?v=3">
-    <link rel="stylesheet" href="./Style/Users/CheckOrder.css?v=3">
-    <link rel="stylesheet" href="./Style/Users/HomePage.css?v=3">
-    <link rel="stylesheet" href="./Style/Users/OrderTracking.css?v=3">
+    <link rel="stylesheet" href="./Style/Users/Header.css?v=4">
+    <link rel="stylesheet" href="./Style/Users/Detail.css?v=4">
+    <link rel="stylesheet" href="./Style/Users/Sidebar.css?v=4">
+    <link rel="stylesheet" href="./Style/Users/Cart.css?v=4">
+    <link rel="stylesheet" href="./Style/Users/Chat.css?v=4">
+    <link rel="stylesheet" href="./Style/Users/Review.css?v=4">
+    <link rel="stylesheet" href="./Style/Users/Supplier.css?v=4">
+    <link rel="stylesheet" href="./Style/Users/Product.css?v=4">
+    <link rel="stylesheet" href="./Style/Users/CheckOrder.css?v=4">
+    <link rel="stylesheet" href="./Style/Users/HomePage.css?v=4">
+    <link rel="stylesheet" href="./Style/Users/OrderTracking.css?v=4">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>

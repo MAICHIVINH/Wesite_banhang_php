@@ -90,31 +90,31 @@
 
 .ecom-product-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
-    border-color: #d70018;
+    box-shadow: 0 10px 24px rgba(79, 70, 229, 0.12);
+    border-color: #4f46e5;
 }
 
 .ecom-product-badge {
     position: absolute;
     top: 8px;
     left: 8px;
-    background: #d70018;
+    background: #4f46e5;
     color: #fff;
     padding: 3px 8px;
     font-size: 11px;
     font-weight: 700;
     border-radius: 6px;
     z-index: 2;
-    box-shadow: 0 2px 6px rgba(215, 0, 24, 0.3);
+    box-shadow: 0 2px 6px rgba(79, 70, 229, 0.3);
 }
 
 .ecom-product-badge.new {
-    background: #10b981;
-    box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+    background: #06b6d4;
+    box-shadow: 0 2px 6px rgba(6, 182, 212, 0.3);
 }
 
 .ecom-product-badge.sale {
-    background: #d70018;
+    background: #4f46e5;
 }
 
 .ecom-product-img {
@@ -135,7 +135,7 @@
     font-weight: 600;
     line-height: 1.4;
     height: 38px;
-    color: #212529;
+    color: #0f172a;
     margin-bottom: 8px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -146,13 +146,13 @@
 }
 
 .ecom-product-title a {
-    color: #212529;
+    color: #0f172a;
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 .ecom-product-title a:hover {
-    color: #d70018;
+    color: #4f46e5;
 }
 
 .ecom-price-box {
@@ -168,24 +168,24 @@
 .ecom-price-box .price-current {
     font-size: 16px !important;
     font-weight: 700 !important;
-    color: #d70018 !important;
+    color: #dc2626 !important;
     line-height: 1.2;
 }
 
 .ecom-price-box .price-old {
     font-size: 12.5px !important;
-    color: #888888 !important;
+    color: #64748b !important;
     text-decoration: line-through !important;
 }
 
 .ecom-price-box .discount-badge {
     font-size: 11px;
     font-weight: 700;
-    color: #d70018;
-    background: #ffebe9;
+    color: #4f46e5;
+    background: #eef2ff;
     padding: 1px 6px;
     border-radius: 4px;
-    border: 1px solid #ffd0cc;
+    border: 1px solid #c7d2fe;
 }
 
 /* Hero 3-Column Layout */
@@ -194,7 +194,7 @@
   border-radius: 12px;
   padding: 8px 0;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e5e7eb;
+  border: 1px solid #e2e8f0;
   height: 360px;
   display: flex;
   flex-direction: column;
@@ -207,7 +207,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 14px;
-  color: var(--text-dark, #111827);
+  color: var(--text-dark, #0f172a);
   text-decoration: none;
   font-size: 13.5px;
   font-weight: 600;
@@ -219,8 +219,8 @@
 }
 
 .hero-category-item:hover {
-  background: #fff5f5;
-  color: #d70018;
+  background: #eef2ff;
+  color: #4f46e5;
   padding-left: 18px;
 }
 
@@ -251,7 +251,7 @@
   height: 36px;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(15, 23, 42, 0.5);
   border-radius: 50%;
   opacity: 0.8;
   transition: opacity 0.2s ease, background 0.2s ease;
@@ -261,7 +261,7 @@
 .hero-main-carousel .carousel-control-prev:hover,
 .hero-main-carousel .carousel-control-next:hover {
   opacity: 1;
-  background: #d70018;
+  background: #4f46e5;
 }
 
 .hero-main-carousel .carousel-indicators [data-bs-target] {
@@ -276,7 +276,7 @@
 .hero-main-carousel .carousel-indicators .active {
   width: 20px;
   border-radius: 10px;
-  background-color: #d70018;
+  background-color: #4f46e5;
 }
 
 /* Right Stacked Promo Banners */
@@ -298,7 +298,7 @@
 
 .hero-right-banner-item:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.15);
 }
 
 .hero-right-banner-item img {
@@ -315,7 +315,7 @@
   border-radius: 12px;
   padding: 16px 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  border: 1px solid #e5e7eb;
+  border: 1px solid #e2e8f0;
   margin: 24px 0;
 }
 
@@ -329,8 +329,8 @@
   width: 44px;
   height: 44px;
   border-radius: 10px;
-  background: #fff5f5;
-  color: #d70018;
+  background: #eef2ff;
+  color: #4f46e5;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -340,12 +340,12 @@
 
 /* Flash Sale Container */
 .flash-sale-box {
-  background: linear-gradient(135deg, #d70018 0%, #ff4d4d 100%);
+  background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
   border-radius: 14px;
   padding: 20px;
   color: #ffffff;
   margin: 30px 0;
-  box-shadow: 0 8px 24px rgba(215, 0, 24, 0.25);
+  box-shadow: 0 8px 24px rgba(79, 70, 229, 0.25);
 }
 
 .flash-sale-header {

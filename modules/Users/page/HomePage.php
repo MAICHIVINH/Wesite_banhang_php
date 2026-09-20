@@ -93,12 +93,7 @@ $sideBanners = isset($bannerController) ? $bannerController->getByPosition('side
                         <div class="carousel-item active">
                             <img src="https://file.hstatic.net/200000722513/file/thang_06_banner_build_pc_top_promotion_banner_2.png" class="d-block w-100" alt="Banner Build PC">
                         </div>
-                        <div class="carousel-item">
-                            <img src="https://file.hstatic.net/200000722513/file/laptop_gaming_top_promotion_banner.png" class="d-block w-100" alt="Banner Laptop Gaming">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="https://file.hstatic.net/200000722513/file/thang_06_banner_man_hinh_top_promotion_banner.png" class="d-block w-100" alt="Banner Màn Hình">
-                        </div>
+                        
                     </div>
                 <?php endif; ?>
                 <button class="carousel-control-prev" type="button" data-bs-target="#heroMainCarousel" data-bs-slide="prev">
