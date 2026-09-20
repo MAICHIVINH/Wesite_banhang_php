@@ -204,6 +204,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
                                         Xem vị trí đơn hàng
                                     </a>
                                 <?php } ?>
+                                <?php if ($order['status_name'] === 'Chờ xử lý') { ?>
+                                    <a href="index.php?subpage=modules/Users/page/OnlinePayment.php&order_id=<?= htmlspecialchars($order['order_id']) ?>"
+                                        class="btn btn-warning btn-sm fw-bold me-1 text-dark"
+                                        style="border-radius: 20px; box-shadow: 0 2px 5px rgba(255, 193, 7, 0.3); text-decoration: none;">
+                                        <i class="bi bi-qr-code-scan me-1"></i> Thanh toán Online (QR)
+                                    </a>
+                                <?php } ?>
                                 <strong class="mb-0">Tổng tiền: <?= number_format($order['total_amount'], 0, ',', '.') ?>₫</strong>
                             </div>
                         </div>
