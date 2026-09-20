@@ -13,10 +13,34 @@ if (!$orderData) {
     exit;
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'confirm_online_payment') {
+    $payId = (int)($orderData['payment_id'] ?? 0);
+    if ($payId > 0 && isset($paymentController)) {
+        $paymentController->update($payId, [
+            'status' => 'Đã thanh toán (MoMo/ShopeePay/VietQR)',
+            'paid_at' => date("Y-m-d H:i:s")
+        ]);
+    }
+
+    // Remove purchased items from cart ONLY ON CONFIRMATION
+    if (isset($orderItems) && is_array($orderItems)) {
+        foreach ($orderItems as $item) {
+            $pId = $item['product_id'] ?? null;
+            if ($pId && isset($_SESSION['cart'][$pId])) {
+                unset($_SESSION['cart'][$pId]);
+            }
+        }
+    }
+
+    swal_alert('success', 'Thanh toán thành công!', 'Cảm ơn bạn đã hoàn tất thanh toán qua MoMo/ShopeePay/VietQR.', 'index.php?subpage=modules/Users/page/CheckOrder.php');
+    exit;
+}
+
 $orderItems = $orderItemController->getOrderItemById($orderId);
 $totalAmount = (float)($orderData['total_amount'] ?? $orderData['total_price'] ?? 0);
-$transferNote = "GAR" . $orderId;
-$bankAccountNo = "0388686789";
+$orderCode = !empty($orderData['code']) ? $orderData['code'] : ("GARENA" . $orderId);
+$transferNote = $orderCode;
+$bankAccountNo = "0394529044";
 $bankName = "MBBank (Ngân hàng Quân Đội)";
 $accountHolder = "GARENA E-SPORTS STORE";
 
@@ -200,9 +224,12 @@ $qrUrl = "https://img.vietqr.io/image/MB-{$bankAccountNo}-compact2.jpg?amount={$
                         <a href="index.php?subpage=modules/Users/page/Cart.php" class="btn btn-outline-secondary rounded-pill px-4">
                             <i class="bi bi-arrow-left me-1"></i> Quay lại giỏ hàng
                         </a>
-                        <a href="index.php?subpage=modules/Users/page/CheckOrder.php" class="btn btn-success rounded-pill px-4 py-2 fw-bold shadow-sm">
-                            <i class="bi bi-check-circle-fill me-1"></i> Tôi đã hoàn tất thanh toán
-                        </a>
+                        <form method="POST" class="d-inline mb-0">
+                            <input type="hidden" name="action" value="confirm_online_payment">
+                            <button type="submit" class="btn btn-success rounded-pill px-4 py-2 fw-bold shadow-sm">
+                                <i class="bi bi-check-circle-fill me-1"></i> Tôi đã hoàn tất thanh toán
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
