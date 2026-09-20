@@ -92,7 +92,20 @@ Mở Terminal / Command Prompt tại thư mục dự án và chạy lệnh sau �
 composer install
 ```
 
-### 5. Khởi Chạy Hệ Thống
+### 5. Khởi Chạy Redis Server Qua Docker (Tùy chọn Cache)
+Hệ thống tích hợp Redis (`RedisCache.php`) để cache dữ liệu Banner và trạng thái Chat. Bạn có thể bật nhanh Redis bằng **Docker Compose**:
+
+```bash
+# Khởi chạy dịch vụ Redis ngầm qua Docker Compose
+docker-compose up -d
+```
+
+*Hoặc khởi chạy bằng lệnh Docker trực tiếp:*
+```bash
+docker run -d --name garena_redis -p 6379:6379 redis:alpine
+```
+
+### 6. Khởi Chạy Hệ Thống
 1. Bật **Apache** và **MySQL** từ XAMPP Control Panel.
 2. Truy cập các đường dẫn sau trên trình duyệt:
 
