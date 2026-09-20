@@ -120,7 +120,7 @@ if (empty($activeBanners) && isset($bannerController)) {
 
 <!-- Top Notification & Utility Bar Strip (CellphoneS Style) -->
 <div class="top-bar-cellphones d-none d-md-block">
-    <div class="container-fluid px-3 px-lg-4 d-flex justify-content-between align-items-center">
+    <div class="container d-flex justify-content-between align-items-center">
         <!-- Left: Ticker Highlights -->
         <div class="top-bar-ticker">
             <span><i class="bi bi-arrow-repeat text-warning"></i> <strong>Thu cũ giá ngon</strong> - Lên đời tiết kiệm</span>
@@ -149,7 +149,7 @@ if (empty($activeBanners) && isset($bannerController)) {
 
 <!-- CellphoneS Red Navbar -->
 <nav class="navbar navbar-expand-lg navbar-cellphones sticky-top" style="z-index: 1031;">
-    <div class="container-fluid px-3 px-lg-4">
+    <div class="container">
         <!-- Logo -->
         <a class="brand-logo-cellphones me-3" href="index.php">
             <i class="bi bi-laptop text-warning"></i> GARENA
