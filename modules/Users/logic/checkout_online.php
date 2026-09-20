@@ -73,7 +73,8 @@ $resOrder = $orderController->add($dataOrder);
 $orderId = isset($resOrder['order_id']) ? $resOrder['order_id'] : null;
 
 if ($orderId) {
-    // 4. Create OrderItems & remove from cart
+    // 4. Create OrderItems & record pending cart items
+    $_SESSION['pending_order_items_' . $orderId] = [];
     foreach ($itemsToBuy as $item) {
         $dataOrderItem = [
             'quantity' => $item['quantity'],
@@ -83,7 +84,7 @@ if ($orderId) {
         ];
 
         $orderItemController->add($dataOrderItem);
-        unset($_SESSION['cart'][$item['product_id']]);
+        $_SESSION['pending_order_items_' . $orderId][] = $item['product_id'];
     }
 
     // Redirect to Online Payment Dynamic QR page

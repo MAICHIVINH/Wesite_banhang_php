@@ -228,7 +228,7 @@ if (empty($activeBanners) && isset($bannerController)) {
                         <i class="bi bi-telephone-outbound header-action-icon text-warning"></i>
                         <div class="d-flex flex-column leading-tight">
                             <span style="font-size: 10px; opacity: 0.9;">Gọi mua hàng</span>
-                            <span>1800.6789</span>
+                            <span>18001234</span>
                         </div>
                     </a>
 

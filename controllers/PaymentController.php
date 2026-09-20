@@ -17,4 +17,14 @@ class PaymentController
     {
         return $this->paymentModel->insert($data);
     }
+
+    public function update($id, $data)
+    {
+        return $this->paymentModel->update($id, $data);
+    }
+
+    public function getById($id)
+    {
+        return $this->paymentModel->find($id);
+    }
 }
