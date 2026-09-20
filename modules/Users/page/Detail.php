@@ -56,46 +56,68 @@ $reviews = $reviewController->getAllReviewUser($id_product);
             ?>
 
             <div class="mt-2">
-                <label class="fw-medium fs-5 mb-1">Giá sản phẩm:</label>
                 <?php if ($discount > 0) { ?>
-                    <h4 class="text-danger">
-                        <span class="fw-bold">
+                    <div class="d-flex align-items-baseline gap-2">
+                        <h3 class="text-danger fw-bold mb-0" style="color: #d70018 !important; font-size: 26px;">
                             <?= number_format($finalPrice, 0, ',', '.') ?>₫
-                        </span>
-                        <span class="text-muted text-decoration-line-through me-2 fs-5">
+                        </h3>
+                        <span class="text-muted text-decoration-line-through fs-5">
                             <?= number_format($originalPrice, 0, ',', '.') ?>₫
                         </span>
-                    </h4>
+                        <span class="badge bg-danger text-white px-2 py-1" style="font-size: 12px;">-<?= (int)round($discount) ?>%</span>
+                    </div>
                 <?php } else { ?>
-                    <h4 class="text-danger">
+                    <h3 class="text-danger fw-bold mb-0" style="color: #d70018 !important; font-size: 26px;">
                         <?= number_format($originalPrice, 0, ',', '.') ?>₫
-                    </h4>
+                    </h3>
                 <?php } ?>
             </div>
 
-            <form class="product-form mt-2" method="post" action="index.php?subpage=modules/Users/page/Cart.php">
-                <?php if (!empty($inventoryProduct)) { ?>
-                    <button class="btn btn-primary" name="addCart">Thêm giỏ hàng</button>
-                <?php } ?>
-                <br>
+            <!-- Hot Promotions Box -->
+            <div class="hot-promo-box">
+                <div class="hot-promo-title">
+                    <i class="bi bi-gift-fill"></i> KHUYẾN MÃI HẤP DẪN
+                </div>
+                <ul class="promo-item-list">
+                    <li><i class="bi bi-check-circle-fill text-success"></i> Tặng Voucher 200.000đ khi thanh toán qua PayOS QR</li>
+                    <li><i class="bi bi-check-circle-fill text-success"></i> Miễn phí vận chuyển giao nhanh tận nhà trong 2H</li>
+                    <li><i class="bi bi-check-circle-fill text-success"></i> Giảm thêm 10% khi mua kèm Bàn phím / Chuột Gaming</li>
+                </ul>
+            </div>
+
+            <form class="product-form mt-3" method="post" action="index.php?subpage=modules/Users/page/Cart.php">
                 <input type="hidden" name="id" value="<?= $productById['id'] ?>">
-                <input type="hidden" name="name" value="<?= $productById['name'] ?>">
+                <input type="hidden" name="name" value="<?= htmlspecialchars($productById['name']) ?>">
                 <input type="hidden" name="price" value="<?= $finalPrice ?>">
-                <input type="hidden" name="image" value="<?= $productById['image_url'] ?>">
-                <div class="store-box">
-                    <h6><i class="bi bi-geo-alt-fill me-1 text-danger"></i> Sản phẩm có tại các cửa hàng</h6>
+                <input type="hidden" name="image" value="<?= htmlspecialchars($productById['image_url']) ?>">
+
+                <?php if (!empty($inventoryProduct)) { ?>
+                    <div class="d-flex flex-column gap-2 w-100">
+                        <button type="submit" name="addCart" class="btn btn-buy-now">
+                            <i class="bi bi-bag-check-fill me-2"></i> MUA NGAY (Giao tận nơi hoặc nhận tại cửa hàng)
+                        </button>
+                        <button type="submit" name="addCart" class="btn btn-add-cart-outline">
+                            <i class="bi bi-cart-plus me-2"></i> THÊM VÀO GIỎ HÀNG
+                        </button>
+                    </div>
+                <?php } else { ?>
+                    <button class="btn btn-secondary w-100 py-3 fw-bold disabled">HẾT HÀNG TẠI TẤT CẢ CỬA HÀNG</button>
+                <?php } ?>
+
+                <div class="store-box mt-3 w-100">
+                    <h6><i class="bi bi-geo-alt-fill me-1 text-danger"></i> Sản phẩm có tại các cửa hàng:</h6>
                     <?php if (!empty($inventoryProduct)) { ?>
-                        <ul>
+                        <ul class="list-unstyled mb-0 small">
                             <?php foreach ($inventoryProduct as $inv) { ?>
-                                <li>
-                                    <span><?= $inv['name'] ?> - </span>
-                                    <span><?= $inv['address'] ?> - </span>
-                                    <span class="text-danger fw-semibold"><?= $inv['stock_quantity'] ?> sản phẩm</span>
+                                <li class="py-1 border-bottom">
+                                    <span class="fw-bold text-dark"><?= htmlspecialchars($inv['name']) ?></span> - 
+                                    <span class="text-muted"><?= htmlspecialchars($inv['address']) ?></span> - 
+                                    <span class="text-danger fw-semibold">(Còn <?= $inv['stock_quantity'] ?> SP)</span>
                                 </li>
                             <?php } ?>
                         </ul>
                     <?php } else { ?>
-                        <p class="text-muted mb-0 text-center">Sản phẩm hiện không có ở bất kỳ cửa hàng nào.</p>
+                        <p class="text-muted mb-0 text-center small">Sản phẩm hiện không có sẵn tại các chi nhánh.</p>
                     <?php } ?>
                 </div>
             </form>

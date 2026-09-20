@@ -27,10 +27,89 @@
 }
 
 
-.text-justify-custom {
-    text-align: justify;
-    line-height: 1.6;
-    margin-top: 15px;
+.hot-promo-box {
+  border: 1.5px dashed #d70018;
+  background: #fff5f5;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin: 16px 0;
+}
+
+.hot-promo-title {
+  color: #d70018;
+  font-weight: 700;
+  font-size: 14.5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.promo-item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 13px;
+  color: #374151;
+}
+
+.promo-item-list li {
+  margin-bottom: 6px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.btn-buy-now {
+  background-color: #d70018 !important;
+  color: #ffffff !important;
+  font-weight: 800;
+  font-size: 16px;
+  text-transform: uppercase;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  width: 100%;
+  transition: background 0.2s ease;
+  box-shadow: 0 4px 12px rgba(215, 0, 24, 0.2);
+}
+
+.btn-buy-now:hover {
+  background-color: #b20014 !important;
+}
+
+.btn-add-cart-outline {
+  border: 2px solid #d70018 !important;
+  color: #d70018 !important;
+  font-weight: 700;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 10px;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.btn-add-cart-outline:hover {
+  background: #fff5f5;
+}
+
+.variant-btn-pill {
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.variant-btn-pill.active,
+.variant-btn-pill:hover {
+  border-color: #d70018;
+  color: #d70018;
+  background: #fff5f5;
 }
 
 .card-title-container {
