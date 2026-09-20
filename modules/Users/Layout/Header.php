@@ -203,38 +203,43 @@ if (empty($activeBanners) && isset($bannerController)) {
     </button>
 </div>
 <!-- Header -->
-<nav class="navbar navbar-expand-lg navbar-light bg-danger shadow-sm sticky-top" style="z-index: 1031;">
-    <div class="container-fluid">
-        <a class="navbar-brand fw-bold text-white" href="index.php">GARENA</a>
+<!-- CellphoneS Red Navbar -->
+<nav class="navbar navbar-expand-lg navbar-cellphones sticky-top" style="z-index: 1031;">
+    <div class="container-fluid px-3 px-lg-4">
+        <!-- Logo -->
+        <a class="brand-logo-cellphones me-3" href="index.php">
+            <i class="bi bi-laptop text-warning"></i> GARENA
+        </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
-            <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler text-white border-white mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+            <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarMain">
-            <div class="d-flex align-items-center w-100 justify-content-between" style="gap: 1rem;">
-                <div class="d-flex align-items-center flex-grow-1" style="gap: 1rem;">
-                    <!-- Dropdown Danh mục -->
+            <div class="d-flex flex-column flex-lg-row align-items-lg-center w-100 justify-content-between gap-2 gap-lg-3">
+                
+                <!-- Group Left: Category Dropdown + Search Bar -->
+                <div class="d-flex flex-column flex-md-row align-items-md-center flex-grow-1 gap-2 gap-lg-3">
+                    
+                    <!-- Mega Menu Danh Mục -->
                     <div class="dropdown">
-                        <a class="nav-link fw-bold dropdown-toggle text-white" href="#" id="categoryDropdown"
-                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-list"></i> Danh mục
+                        <a class="btn-category-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-list fs-5"></i>
+                            <span>Danh mục</span>
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-grid p-2 shadow" aria-labelledby="categoryDropdown">
                             <li>
-                                <a class="dropdown-item"
-                                    href="index.php?subpage=modules/Users/Layout/Main.php&<?= isset($_GET['supplier']) ? 'supplier=' . $_GET['supplier'] : '' ?>">
-                                    Tất cả
+                                <a class="dropdown-item fw-bold text-danger" href="index.php?subpage=modules/Users/Layout/Main.php">
+                                    <i class="bi bi-grid-fill me-1"></i> Tất cả danh mục
                                 </a>
                             </li>
                             <?php foreach ($categoryGetAll as $item) {
                                 if ($item['status'] === 0) {
                                     ?>
                                     <li>
-                                        <a class="dropdown-item"
-                                            href="index.php?subpage=modules/Users/Layout/Main.php&category=<?= $item['id'] ?><?= isset($_GET['supplier']) ? '&supplier=' . $_GET['supplier'] : '' ?>">
-                                            <?= $item['name'] ?>
+                                        <a class="dropdown-item" href="index.php?subpage=modules/Users/Layout/Main.php&category=<?= $item['id'] ?><?= isset($_GET['supplier']) ? '&supplier=' . $_GET['supplier'] : '' ?>">
+                                            <i class="bi bi-tag me-1 text-danger"></i> <?= htmlspecialchars($item['name']) ?>
                                         </a>
                                     </li>
                                     <?php
@@ -243,92 +248,103 @@ if (empty($activeBanners) && isset($bannerController)) {
                         </ul>
                     </div>
 
-                    <!-- Dropdown Thương hiệu -->
-                    <div class="dropdown">
-                        <a class="nav-link fw-bold dropdown-toggle text-white" href="#" id="supplierDropdown"
-                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-box-seam"></i> Thương hiệu
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-grid p-2 shadow" aria-labelledby="supplierDropdown">
-                            <li>
-                                <a class="dropdown-item"
-                                    href="index.php?subpage=modules/Users/Layout/Main.php&<?= isset($_GET['category']) ? 'category=' . $_GET['category'] : '' ?>&<?= isset($_GET['search']) ? 'search=' . $_GET['search'] : '' ?>">
-                                    Tất cả
-                                </a>
-                            </li>
-                            <?php foreach ($supplierGetAll as $item) { ?>
-                                <li>
-                                    <a class="dropdown-item"
-                                        href="index.php?subpage=modules/Users/Layout/Main.php&supplier=<?= $item['id'] ?>&<?= isset($_GET['category']) ? 'category=' . $_GET['category'] : '' ?>&<?= isset($_GET['search']) ? 'search=' . $_GET['search'] : '' ?>">
-                                        <?= $item['name'] ?>
-                                    </a>
-                                </li>
-                            <?php } ?>
-                        </ul>
+                    <!-- Search Bar with Hot Keywords -->
+                    <div class="search-cellphones-group flex-grow-1">
+                        <form action="index.php" method="get" class="d-flex">
+                            <input type="hidden" name="subpage" value="modules/Users/Layout/Main.php">
+                            <input type="hidden" name="category" value="<?= htmlspecialchars($_GET['category'] ?? '') ?>">
+                            <input type="hidden" name="supplier" value="<?= htmlspecialchars($_GET['supplier'] ?? '') ?>">
+                            
+                            <input type="search" name="search" class="form-control search-cellphones-input"
+                                placeholder="Bạn cần tìm sản phẩm gì? (VD: Laptop Gaming, MacBook...)" 
+                                value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+                            <button class="btn search-cellphones-btn" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </form>
+                        
+                        <!-- Hot Search Keywords -->
+                        <div class="hot-keywords d-none d-md-flex">
+                            <a href="index.php?subpage=modules/Users/Layout/Main.php&search=Laptop+Gaming">Laptop Gaming</a>
+                            <a href="index.php?subpage=modules/Users/Layout/Main.php&search=MacBook">MacBook Air</a>
+                            <a href="index.php?subpage=modules/Users/Layout/Main.php&search=RTX">Card RTX</a>
+                            <a href="index.php?subpage=modules/Users/Layout/Main.php&search=Tai+nghe">Tai nghe</a>
+                            <a href="index.php?subpage=modules/Users/Layout/Main.php&search=Bàn+phím">Bàn phím cơ</a>
+                        </div>
                     </div>
 
-                    <form action="index.php" method="get" class="search-form d-flex align-items-center">
-                        <input type="hidden" name="subpage" value="modules/Users/Layout/Main.php">
-
-                        <input type="hidden" name="category" value="<?= $_GET['category'] ?? '' ?>">
-                        <input type="hidden" name="supplier" value="<?= $_GET['supplier'] ?? '' ?>">
-                        <input type="search" name="search" class="form-control custom-search-input"
-                            placeholder="Bạn cần tìm gì?" value="<?= $_GET['search'] ?? '' ?>">
-                        <button class=" btn custom-search-btn" type="submit">
-                            <i class="bi bi-search"></i>
-                        </button>
-                    </form>
                 </div>
 
-                <ul class="navbar-nav" style="gap: 0.75rem;">
-                    <li class="nav-item">
-                        <?php if ($userData === null) { ?>
-                            <a data-bs-toggle="modal" data-bs-target="#loginModal" href="#" class="nav-link text-white">
-                                <i class="bi bi-receipt-cutoff me-1"></i> Tra cứu đơn hàng
-                            </a>
-                            <?php
-                        } else {
-                            ?>
-                            <a href="index.php?subpage=modules/Users/page/CheckOrder.php" class="nav-link text-white">
-                                <i class="bi bi-receipt-cutoff me-1"></i> Tra cứu đơn hàng
-                            </a>
-                            <?php
-                        }
-                        ?>
-                    </li>
-                    <li class="nav-item">
-                        <a href="index.php?subpage=modules/Users/page/Cart.php" class="nav-link text-white">
-                            <i class="bi bi-cart-plus-fill me-2" style="font-size: 1.2rem;"></i>
-                            <span class="position-absolute top-3 translate-middle badge rounded-pill 
-                                <?= $totalCartItems > 0 ? 'bg-warning text-dark' : 'bg-warning text-dark' ?>"
-                                style="font-size: 0.65rem;">
-                                <?= $totalCartItems ?>
-                            </span>
+                <!-- Group Right: Utility Action Pills -->
+                <div class="d-flex align-items-center flex-wrap gap-2">
+                    
+                    <!-- Hotline Call -->
+                    <a href="tel:18006789" class="header-action-item d-none d-xl-flex">
+                        <i class="bi bi-telephone-outbound header-action-icon text-warning"></i>
+                        <div class="d-flex flex-column leading-tight">
+                            <span style="font-size: 10px; opacity: 0.9;">Gọi mua hàng</span>
+                            <span>1800.6789</span>
+                        </div>
+                    </a>
+
+                    <!-- Tra cứu đơn hàng -->
+                    <?php if ($userData === null) { ?>
+                        <a data-bs-toggle="modal" data-bs-target="#loginModal" href="#" class="header-action-item">
+                            <i class="bi bi-truck header-action-icon text-warning"></i>
+                            <span>Đơn hàng</span>
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <?php if ($userData === null) { ?>
-                            <a href="#" class="nav-link text-white" data-bs-toggle="modal" data-bs-target="#loginModal">
-                                <i class="bi bi-person-circle me-1"></i> Đăng nhập
+                    <?php } else { ?>
+                        <a href="index.php?subpage=modules/Users/page/CheckOrder.php" class="header-action-item">
+                            <i class="bi bi-truck header-action-icon text-warning"></i>
+                            <span>Đơn hàng</span>
+                        </a>
+                    <?php } ?>
+
+                    <!-- Giỏ hàng -->
+                    <a href="index.php?subpage=modules/Users/page/Cart.php" class="header-action-item">
+                        <i class="bi bi-cart3 header-action-icon text-warning"></i>
+                        <span>Giỏ hàng</span>
+                        <span class="cart-badge-count"><?= $totalCartItems ?></span>
+                    </a>
+
+                    <!-- Tài khoản -->
+                    <?php if ($userData === null) { ?>
+                        <a href="#" class="header-action-item" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            <i class="bi bi-person-circle header-action-icon text-warning"></i>
+                            <span>Đăng nhập</span>
+                        </a>
+                    <?php } else { ?>
+                        <div class="dropdown">
+                            <a class="header-action-item dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-circle header-action-icon text-warning"></i>
+                                <span><?= htmlspecialchars($userData->name) ?></span>
                             </a>
-                        <?php } else { ?>
-                            <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-person-circle me-1"></i> <?= htmlspecialchars($userData->name) ?>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                        data-bs-target="#accountModal">Tài khoản của tôi</a></li>
+                            <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3 mt-2" aria-labelledby="userDropdown">
                                 <li>
-                                    <hr class="dropdown-divider">
+                                    <a class="dropdown-item py-2" href="#" data-bs-toggle="modal" data-bs-target="#accountModal">
+                                        <i class="bi bi-person-gear me-2 text-primary"></i> Tài khoản của tôi
+                                    </a>
                                 </li>
-                                <li><a class="dropdown-item text-danger" href="logout.php">Đăng xuất</a></li>
+                                <li>
+                                    <a class="dropdown-item py-2" href="index.php?subpage=modules/Users/page/CheckOrder.php">
+                                        <i class="bi bi-box-seam me-2 text-success"></i> Quản lý đơn hàng
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item py-2 text-danger fw-bold" href="logout.php">
+                                        <i class="bi bi-box-arrow-right me-2"></i> Đăng xuất
+                                    </a>
+                                </li>
                             </ul>
-                        <?php } ?>
-                    </li>
-                </ul>
+                        </div>
+                    <?php } ?>
+
+                </div>
+
             </div>
         </div>
+    </div>
 </nav>
 
 <?php if ($userData !== null): ?>
