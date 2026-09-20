@@ -188,14 +188,131 @@
     border: 1px solid #ffd0cc;
 }
 
-.ecom-carousel .carousel-control-prev,
-.ecom-carousel .carousel-control-next {
-    width: 45px;
-    height: 45px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
+/* Hero 3-Column Layout */
+.hero-category-menu {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 6px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e7eb;
+}
+
+.hero-category-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  color: var(--text-dark, #111827);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  margin: 2px 6px;
+}
+
+.hero-category-item:hover {
+  background: #fff5f5;
+  color: #d70018;
+  padding-left: 18px;
+}
+
+/* Trust Badges Bar */
+.trust-badges-bar {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e5e7eb;
+  margin: 24px 0;
+}
+
+.trust-badge-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.trust-badge-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #fff5f5;
+  color: #d70018;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+/* Flash Sale Container */
+.flash-sale-box {
+  background: linear-gradient(135deg, #d70018 0%, #ff4d4d 100%);
+  border-radius: 14px;
+  padding: 20px;
+  color: #ffffff;
+  margin: 30px 0;
+  box-shadow: 0 8px 24px rgba(215, 0, 24, 0.25);
+}
+
+.flash-sale-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.flash-sale-title {
+  font-size: 22px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.countdown-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.countdown-item {
+  background: #000000;
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.sale-progress-bar {
+  height: 14px;
+  background: #ffe0e3;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  margin-top: 8px;
+}
+
+.sale-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff9800 0%, #d70018 100%);
+  border-radius: 20px;
+}
+
+.sale-progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
 }
 
 .ecom-carousel .carousel-control-prev {
