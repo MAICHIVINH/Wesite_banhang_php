@@ -1,4 +1,4 @@
-# 🚀 GARENA - E-Commerce Store & Admin Management System
+# GARENA - E-Commerce Store & Admin Management System
 
 ![GARENA Theme](https://img.shields.io/badge/Theme-GARENA%20Cyber%20Indigo-4F46E5?style=for-the-badge)
 ![PHP Version](https://img.shields.io/badge/PHP-8.1%2B-777BB4?style=for-the-badge&logo=php)
@@ -7,18 +7,18 @@
 
 ---
 
-# 📖 PHẦN 1: MÔ TẢ TỔNG QUAN HỆ THỐNG
+# PHẦN 1: MÔ TẢ TỔNG QUAN HỆ THỐNG
 
-## 📌 Giới Thiệu Dự Án
+## Giới Thiệu Dự Án
 **GARENA E-Sports Store** là hệ thống website thương mại điện tử chuyên nghiệp cung cấp thiết bị công nghệ, phụ kiện gaming và linh kiện máy tính cao cấp. 
 
 Hệ thống được thiết kế theo kiến trúc **Custom PHP MVC Pattern** linh hoạt, sử dụng nhận diện thương hiệu **GARENA Cyber Indigo (`#4F46E5`) & Cyan (`#06B6D4`)** mang phong cách công nghệ hiện đại, sang trọng và tối ưu trải nghiệm người dùng trên cả nền tảng Desktop và Mobile.
 
 ---
 
-## ✨ Tính Năng Nổi Bật
+## Tính Năng Nổi Bật
 
-### 🛍️ 1. Trang Khách Hàng (Storefront Portal)
+### 1. Trang Khách Hàng (Storefront Portal)
 - **Giao diện nhận diện GARENA Cyber Indigo**: Phối màu Indigo & Cyan ấn tượng, chuyển động mượt mà.
 - **Trang chủ & Banner Slider**: Banner khuyến mãi 3 cột chuẩn độ cao 360px, tích hợp danh mục sản phẩm và ưu đãi hot.
 - **Tìm kiếm & Bộ lọc nâng cao**: Lọc sản phẩm theo danh mục, nhà cung cấp, khoảng giá và chi nhánh cửa hàng.
@@ -30,7 +30,7 @@ Hệ thống được thiết kế theo kiến trúc **Custom PHP MVC Pattern** 
 - **Tra cứu & Theo dõi đơn hàng**: Hiển thị chi tiết đơn hàng, badge trạng thái thanh toán & trạng thái đơn hàng, hỗ trợ hủy đơn linh hoạt.
 - **Đánh giá & Nhận xét**: Đánh giá sao và gửi phản hồi sản phẩm đã mua.
 
-### 🛡️ 2. Trang Quản Trị (Admin Panel - `Admin.php`)
+### 2. Trang Quản Trị (Admin Panel - `Admin.php`)
 - **Báo cáo Thống kê**: Tổng quan doanh thu, thống kê đơn hàng theo tuần/tháng, hỗ trợ xuất báo cáo Excel (`PhpSpreadsheet`).
 - **Quản lý Đơn hàng & Giao hàng**: Duyệt đơn hàng, đối soát chuyển khoản online, cập nhật luồng vận chuyển.
 - **Bản đồ Giao hàng Thông minh (Interactive Shipping Map)**:
@@ -42,7 +42,7 @@ Hệ thống được thiết kế theo kiến trúc **Custom PHP MVC Pattern** 
 
 ---
 
-## 🛠️ Công Nghệ Sử Dụng
+## Công Nghệ Sử Dụng
 
 - **Backend**: PHP 8.1+ (Custom MVC Pattern, PDO Database Wrapper, Redis Cache)
 - **Database**: MySQL / MariaDB (`utf8mb4_unicode_ci`)
@@ -56,7 +56,7 @@ Hệ thống được thiết kế theo kiến trúc **Custom PHP MVC Pattern** 
 
 ---
 
-## 📁 Cấu Trúc Thư Mục Dự Án
+## Cấu Trúc Thư Mục Dự Án
 
 ```
 DevPHP_V2/
@@ -92,9 +92,9 @@ DevPHP_V2/
 
 ---
 
-# 💻 PHẦN 2: HƯỚNG DẪN CÀI ĐẶT & KHỞI CHẠY
+# PHẦN 2: HƯỚNG DẪN CÀI ĐẶT & KHỞI CHẠY
 
-## 📋 Yêu Cầu Hệ Thống
+## Yêu Cầu Hệ Thống
 
 Dự án chạy tốt trên các môi trường Localhost như **XAMPP, WAMP, Laragon, MAMP**:
 
@@ -109,7 +109,7 @@ Dự án chạy tốt trên các môi trường Localhost như **XAMPP, WAMP, La
 
 ---
 
-## 🚀 Hướng Dẫn Các Bước Khởi Chạy
+## Hướng Dẫn Các Bước Khởi Chạy
 
 ### Bước 1: Download / Clone Source Code
 Chép thư mục dự án vào thư mục gốc của Web Server (đối với XAMPP: `C:\xampp\htdocs\DevPHP_V2`).
@@ -155,15 +155,15 @@ docker run -d --name garena_redis -p 6379:6379 redis:alpine
 1. Bật dịch vụ **Apache** và **MySQL** từ XAMPP Control Panel.
 2. Mở trình duyệt và truy cập các đường dẫn:
 
-- 🛒 **Trang Khách Hàng (Storefront)**:  
+- **Trang Khách Hàng (Storefront)**:  
   `http://localhost/DevPHP_V2/`
 
-- 🛡️ **Trang Quản Trị (Admin Panel)**:  
+- **Trang Quản Trị (Admin Panel)**:  
   `http://localhost/DevPHP_V2/Admin.php`
 
 ---
 
-## 🕷️ Hướng Dẫn Chạy Tool Cào Dữ Liệu Giá Thị Trường (Data Scraper)
+## Hướng Dẫn Chạy Tool Cào Dữ Liệu Giá Thị Trường (Data Scraper)
 
 Hệ thống tích hợp công cụ tự động cào dữ liệu giá đối thủ (Thế Giới Di Động, FPT Shop, CellphoneS...) để hỗ trợ tính năng **So sánh giá thị trường** trong Trang Admin và Trang chi tiết sản phẩm.
 
@@ -203,7 +203,7 @@ php scripts/scraper/seed_prices.php
 
 ---
 
-## 📝 Đóng Góp & Hỗ Trợ
-Dự án được phát triển và duy trì bởi đội ngũ **GARENA E-Sports Store**. Nếu bạn gặp bất kỳ vấn đề gì trong quá trình cài đặt hoặc vận hành, vui lòng liên hệ bộ phận hỗ trợ kỹ thuật.
+## Đóng Góp & Hỗ Trợ
+Dự án được phát triển và duy trì bởi **Mai Chí Vĩnh**. Nếu bạn gặp bất kỳ vấn đề gì trong quá trình cài đặt hoặc vận hành, vui lòng liên hệ bộ phận hỗ trợ kỹ thuật.
 
-*Chúc bạn cài đặt và trải nghiệm thành công! 🎉*
+*Chúc bạn cài đặt và trải nghiệm thành công!*
