@@ -161,6 +161,19 @@ docker run -d --name garena_redis -p 6379:6379 redis:alpine
 - **Trang Quản Trị (Admin Panel)**:  
   `http://localhost/DevPHP_V2/Admin.php`
 
+### Bước 7: Cấu Hình Truy Cập Từ Thiết Bị Bên Ngoài Khác Mạng (4G/5G, Wifi Khác)
+Để cho phép thiết bị bên ngoài (điện thoại 4G/5G, máy tính khác mạng) truy cập vào web đang chạy ở Localhost:
+
+1. Tải công cụ **Cloudflare Tunnel** (`cloudflared.exe`) và đặt vào thư mục bất kỳ (ví dụ: `D:\cloudflared`).
+2. Mở PowerShell / Command Prompt tại thư mục chứa `cloudflared.exe` và chạy lệnh:
+   ```powershell
+   .\cloudflared.exe tunnel --url http://localhost
+   ```
+3. Copy đường link public được Cloudflare cấp (ví dụ `https://xxxx.trycloudflare.com`) và truy cập trên thiết bị di động:
+   ```text
+   https://goes-payroll-hepatitis-iso.trycloudflare.com/DevPHP_V2/
+   ```
+
 ---
 
 ## Hướng Dẫn Chạy Tool Cào Dữ Liệu Giá Thị Trường (Data Scraper)
@@ -204,6 +217,6 @@ php scripts/scraper/seed_prices.php
 ---
 
 ## Đóng Góp & Hỗ Trợ
-Dự án được phát triển và duy trì bởi **Mai Chí Vĩnh**. Nếu bạn gặp bất kỳ vấn đề gì trong quá trình cài đặt hoặc vận hành, vui lòng liên hệ bộ phận hỗ trợ kỹ thuật.
+Dự án được phát triển và duy trì bởi **Mai Chí Vĩnh**. Nếu bạn gặp bất kỳ vấn đề gì trong quá trình cài đặt hoặc vận hành, vui lòng liên hệ **chivinh260904@gmail.com**.
 
 *Chúc bạn cài đặt và trải nghiệm thành công!*
