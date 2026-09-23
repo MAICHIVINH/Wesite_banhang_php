@@ -58,22 +58,23 @@ if (isset($_GET['ajax_get_user_chat']) || isset($_POST['ajax_send_user_chat'])) 
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>MCV Shop</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-    <link rel="stylesheet" href="./Style/Users/Header.css?v=4">
-    <link rel="stylesheet" href="./Style/Users/Detail.css?v=4">
-    <link rel="stylesheet" href="./Style/Users/Sidebar.css?v=4">
-    <link rel="stylesheet" href="./Style/Users/Cart.css?v=4">
-    <link rel="stylesheet" href="./Style/Users/Chat.css?v=4">
-    <link rel="stylesheet" href="./Style/Users/Review.css?v=4">
-    <link rel="stylesheet" href="./Style/Users/Supplier.css?v=4">
-    <link rel="stylesheet" href="./Style/Users/Product.css?v=4">
-    <link rel="stylesheet" href="./Style/Users/CheckOrder.css?v=4">
-    <link rel="stylesheet" href="./Style/Users/HomePage.css?v=4">
-    <link rel="stylesheet" href="./Style/Users/OrderTracking.css?v=4">
+    <link rel="stylesheet" href="./Style/Users/Header.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="./Style/Users/Detail.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="./Style/Users/Sidebar.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="./Style/Users/Cart.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="./Style/Users/Chat.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="./Style/Users/Review.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="./Style/Users/Supplier.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="./Style/Users/Product.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="./Style/Users/CheckOrder.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="./Style/Users/HomePage.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="./Style/Users/OrderTracking.css?v=<?= time() ?>">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -81,12 +82,22 @@ if (isset($_GET['ajax_get_user_chat']) || isset($_POST['ajax_send_user_chat'])) 
         .chat-box {
             position: fixed;
             bottom: 80px;
-            right: 20px;
-            width: 400px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            right: 16px;
+            width: calc(100vw - 32px);
+            max-width: 400px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
             background: white;
             z-index: 9998;
+        }
+
+        @media (max-width: 576px) {
+            .chat-box {
+                right: 16px !important;
+                left: 16px !important;
+                width: auto !important;
+                max-width: none !important;
+            }
         }
 
         .hidden {

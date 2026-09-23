@@ -14,7 +14,7 @@ $products = $product->getFilterProducts($id_category, $id_supplier, $keyword, $l
 ?>
 
 <div class="product-list">
-    <div class="row g-3">
+    <div class="row g-3 align-items-start">
         <?php if (!empty($products)): ?>
             <?php foreach ($products as $item) {
                 $originalPrice = (float)$item['price'];
@@ -22,7 +22,7 @@ $products = $product->getFilterProducts($id_category, $id_supplier, $keyword, $l
                 $finalPrice = $originalPrice * (1 - $discount / 100);
                 $displayDiscount = (int)round($discount);
             ?>
-                <div class="col-md-3 col-sm-6 col-12">
+                <div class="col-6 col-md-4 col-lg-3">
                     <div class="product-card ecom-product-card shadow-sm">
                         <?php if ($displayDiscount > 0): ?>
                             <span class="ecom-product-badge sale">-<?= $displayDiscount ?>%</span>

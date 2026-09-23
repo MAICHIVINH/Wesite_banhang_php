@@ -2,6 +2,20 @@
 $categoryGetAll = $category->getAll();
 $supplierGetAll = $supplier->getAllToDb();
 
+if (!function_exists('getCategoryIcon')) {
+    function getCategoryIcon($catName) {
+        $name = mb_strtolower($catName, 'UTF-8');
+        if (str_contains($name, 'laptop') || str_contains($name, 'máy tính')) return 'bi-laptop';
+        if (str_contains($name, 'điện thoại') || str_contains($name, 'phone') || str_contains($name, 'smartphone')) return 'bi-phone';
+        if (str_contains($name, 'tai nghe') || str_contains($name, 'âm thanh') || str_contains($name, 'loa')) return 'bi-headphones';
+        if (str_contains($name, 'chuột') || str_contains($name, 'bàn phím') || str_contains($name, 'phụ kiện')) return 'bi-keyboard';
+        if (str_contains($name, 'màn hình') || str_contains($name, 'monitor')) return 'bi-display';
+        if (str_contains($name, 'linh kiện') || str_contains($name, 'card') || str_contains($name, 'cpu')) return 'bi-cpu';
+        if (str_contains($name, 'đồng hồ') || str_contains($name, 'watch')) return 'bi-smartwatch';
+        return 'bi-tag-fill';
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['sendEmail'])) {
     $userController->sendResetToken($_POST['email']);
     $_SESSION['email'] = $_POST['email'];
@@ -158,7 +172,54 @@ if (empty($activeBanners) && isset($bannerController)) {
             MCV Shop
         </a>
 
-        <button class="navbar-toggler text-white border-white mb-2" type="button" data-bs-toggle="collapse"
+        <div class="d-flex align-items-center gap-1 ms-auto d-lg-none me-2">
+            <!-- Mobile Quick Cart -->
+            <a href="index.php?subpage=modules/Users/page/Cart.php" class="btn btn-sm text-white position-relative p-1 px-2" title="Giỏ hàng">
+                <i class="bi bi-cart3 fs-5 text-warning"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark fw-bold" style="font-size: 10px;">
+                    <?= $totalCartItems ?>
+                </span>
+            </a>
+            <!-- Mobile Quick User -->
+            <?php if ($userData === null) { ?>
+                <a href="#" class="btn btn-sm text-white p-1 px-2" data-bs-toggle="modal" data-bs-target="#loginModal" title="Đăng nhập">
+                    <i class="bi bi-person-circle fs-5 text-warning"></i>
+                </a>
+            <?php } else { ?>
+                <div class="dropdown d-inline-block">
+                    <a href="#" class="btn btn-sm text-white p-1 px-2" id="mobileUserDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Tài khoản">
+                        <i class="bi bi-person-circle fs-5 text-warning"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3 mt-2" aria-labelledby="mobileUserDropdown" style="z-index: 1060; min-width: 200px;">
+                        <li>
+                            <div class="px-3 py-2 fw-bold text-primary border-bottom small">
+                                <i class="bi bi-person-check-fill me-1"></i> <?= htmlspecialchars($userData->name) ?>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="dropdown-item py-2" href="#" data-bs-toggle="modal" data-bs-target="#accountModal">
+                                <i class="bi bi-person-gear me-2 text-primary"></i> Tài khoản của tôi
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item py-2" href="index.php?subpage=modules/Users/page/CheckOrder.php">
+                                <i class="bi bi-box-seam me-2 text-success"></i> Quản lý đơn hàng
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item py-2 text-danger fw-bold" href="logout.php">
+                                <i class="bi bi-box-arrow-right me-2"></i> Đăng xuất
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            <?php } ?>
+        </div>
+
+        <button class="navbar-toggler text-white border-white mb-0" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarMain">
             <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
         </button>
@@ -174,30 +235,35 @@ if (empty($activeBanners) && isset($bannerController)) {
                     <div class="dropdown">
                         <a class="btn-category-toggle" href="#" id="categoryDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-list fs-5"></i>
+                            <i class="bi bi-grid-fill fs-5 me-1 text-warning"></i>
                             <span>Danh mục</span>
+                            <i class="bi bi-chevron-down ms-1" style="font-size: 11px; opacity: 0.8;"></i>
                         </a>
 
-                        <ul class="dropdown-menu dropdown-menu-grid p-2 shadow" aria-labelledby="categoryDropdown">
-                            <li>
-                                <a class="dropdown-item fw-bold text-danger"
-                                    href="index.php?subpage=modules/Users/Layout/Main.php">
-                                    <i class="bi bi-grid-fill me-1"></i> Tất cả danh mục
-                                </a>
-                            </li>
+                        <div class="dropdown-menu dropdown-menu-grid p-3 shadow-lg" aria-labelledby="categoryDropdown">
+                            <a class="category-menu-item <?= !isset($_GET['category']) ? 'active' : '' ?>"
+                                href="index.php?subpage=modules/Users/Layout/Main.php">
+                                <div class="category-icon-wrapper">
+                                    <i class="bi bi-grid-fill"></i>
+                                </div>
+                                <span>Tất cả danh mục</span>
+                            </a>
                             <?php foreach ($categoryGetAll as $item) {
                                 if ($item['status'] === 0) {
+                                    $iconClass = getCategoryIcon($item['name']);
+                                    $isCatActive = (isset($_GET['category']) && $_GET['category'] == $item['id']);
                                     ?>
-                                    <li>
-                                        <a class="dropdown-item"
-                                            href="index.php?subpage=modules/Users/Layout/Main.php&category=<?= $item['id'] ?><?= isset($_GET['supplier']) ? '&supplier=' . $_GET['supplier'] : '' ?>">
-                                            <i class="bi bi-tag me-1 text-danger"></i> <?= htmlspecialchars($item['name']) ?>
-                                        </a>
-                                    </li>
+                                    <a class="category-menu-item <?= $isCatActive ? 'active' : '' ?>"
+                                        href="index.php?subpage=modules/Users/Layout/Main.php&category=<?= $item['id'] ?><?= isset($_GET['supplier']) ? '&supplier=' . $_GET['supplier'] : '' ?>">
+                                        <div class="category-icon-wrapper">
+                                            <i class="bi <?= $iconClass ?>"></i>
+                                        </div>
+                                        <span><?= htmlspecialchars($item['name']) ?></span>
+                                    </a>
                                     <?php
                                 }
                             } ?>
-                        </ul>
+                        </div>
                     </div>
 
                     <!-- Search Bar with Hot Keywords -->
@@ -231,7 +297,7 @@ if (empty($activeBanners) && isset($bannerController)) {
                 </div>
 
                 <!-- Group Right: Utility Action Pills -->
-                <div class="d-flex align-items-center flex-wrap gap-2">
+                <div class="header-action-group">
 
                     <!-- Hotline Call -->
                     <a href="tel:18006789" class="header-action-item d-none d-xl-flex">

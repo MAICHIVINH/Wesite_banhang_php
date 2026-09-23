@@ -38,14 +38,16 @@ if (!empty($arrayPrice)) {
 ?>
 
 <div class="container mt-3">
-    <div class="d-flex" style="min-height: 100vh;">
-        <div style="width: 310px;">
-            <div style="position: sticky; top: 70px; z-index: 1029;">
+    <div class="row g-3 align-items-start">
+        <!-- Left Filter Sidebar -->
+        <div class="col-12 col-lg-3">
+            <div class="sticky-lg-top" style="top: 80px; z-index: 1020;">
                 <?php include 'Sidebar.php'; ?>
             </div>
         </div>
 
-        <div class="flex-grow-1 ms-0 ms-md-3">
+        <!-- Right Product Area -->
+        <div class="col-12 col-lg-9">
             <?php
             if (isset($_GET['page'])) {
                 require $_GET['page'];

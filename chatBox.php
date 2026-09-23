@@ -86,10 +86,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ai_message'])) {
             <i id="ai-chat-close" class="bi bi-x-lg" style="cursor: pointer;" title="Đóng"></i>
         </div>
     </div>
-    <div id="ai-chat-content" class="p-2"
-        style="background: #f8f9fa; min-height: 399px; max-height: 399px; overflow-y: auto;">
+    <div id="ai-chat-content" class="p-2 overflow-auto flex-grow-1" style="background: #f8f9fa;">
         <?php if (empty($_SESSION['chat_history'])): ?>
-            <div class="text-center text-muted" style="margin-top: 150px;">
+            <div class="text-center text-muted my-auto py-5">
                 <i class="bi bi-chat-dots fs-1"></i>
                 <p class="mt-2">Chưa có tin nhắn</p>
             </div>
@@ -134,10 +133,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ai_message'])) {
         <?php endif; ?>
 
     </div>
-    <form method="POST" class="border-top d-flex align-items-center">
+    <form method="POST" class="p-2 border-top d-flex align-items-center">
         <input type="text" class="form-control me-2" style="border: none; box-shadow: none; outline: none;"
-            name="ai_message" placeholder="Nhập tin nhắn..." required>
-        <button type="submit" class="btn"><i class="bi bi-send-fill text-green fs-4"></i>
+            name="ai_message" placeholder="Nhập tin nhắn..." required autocomplete="off">
+        <button type="submit" class="btn"><i class="bi bi-send-fill text-success fs-4"></i>
         </button>
     </form>
 </div>

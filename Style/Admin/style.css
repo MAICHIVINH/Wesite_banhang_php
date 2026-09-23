@@ -5,6 +5,7 @@
   flex-direction: column;
   align-items: flex-start;
   width: calc(100% - 250px);
+  transition: all 0.3s ease;
 }
 
 body {
@@ -19,6 +20,28 @@ body {
   min-height: 100vh;
 }
 
-/* .modal-dialog {
-  max-width: 800px !important;
-} */
+@media (max-width: 992px) {
+  .content {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 80px 12px 20px !important;
+  }
+
+  .navbar {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    height: 100vh;
+    z-index: 1060;
+    transition: left 0.3s ease;
+  }
+
+  .sidebar.show {
+    left: 0 !important;
+  }
+}
