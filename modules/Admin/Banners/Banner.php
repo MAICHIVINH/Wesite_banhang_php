@@ -155,7 +155,7 @@ if ($filterPosition !== '') {
                                         </button>
                                     <?php else: ?>
                                         <button type="submit" class="btn btn-sm btn-secondary border-0 px-3 py-1 rounded-pill" title="Click để hiện banner">
-                                            <i class="bi bi-eye-slash me-1"></i> Đang ẩn
+                                            <i class="bi bi-eye-slash me-1"></i> Ẩn
                                         </button>
                                     <?php endif; ?>
                                 </form>

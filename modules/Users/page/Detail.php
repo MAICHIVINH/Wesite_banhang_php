@@ -73,15 +73,40 @@ $reviews = $reviewController->getAllReviewUser($id_product);
                 <?php } ?>
             </div>
 
+            <?php
+            // Dynamic Promotion Offers per Category
+            $catDetail = isset($productById['category_id']) ? $category->getById($productById['category_id']) : null;
+            $catName = mb_strtolower($catDetail['name'] ?? '', 'UTF-8');
+
+            $promotions = [
+                "Tặng Voucher 200.000đ khi thanh toán qua PayOS QR",
+                "Miễn phí vận chuyển giao nhanh tận nhà trong 2H"
+            ];
+
+            if (str_contains($catName, 'laptop') || str_contains($catName, 'màn hình')) {
+                $promotions[] = "Giảm thêm 10% khi mua kèm Bàn phím / Chuột Gaming / Balo Laptop";
+                $promotions[] = "Giảm 50% gói bảo hành mở rộng 12 tháng chính hãng";
+            } elseif (str_contains($catName, 'tai nghe') || str_contains($catName, 'loa') || str_contains($catName, 'âm thanh')) {
+                $promotions[] = "Giảm thêm 10% khi mua kèm Hộp bảo vệ / Củ sạc phụ kiện âm thanh";
+                $promotions[] = "Bảo hành 1 đổi 1 trong 30 ngày đầu nếu có lỗi nhà sản xuất";
+            } elseif (str_contains($catName, 'điện thoại') || str_contains($catName, 'đồng hồ') || str_contains($catName, 'smartphone')) {
+                $promotions[] = "Giảm thêm 15% khi mua kèm Ốp lưng / Sạc dự phòng / Dán cường lực";
+                $promotions[] = "Thu cũ đổi mới trợ giá lên đến 1.000.000đ";
+            } else {
+                $promotions[] = "Giảm thêm 5% khi mua kèm các sản phẩm phụ kiện cùng đơn hàng";
+                $promotions[] = "Cam kết hàng chính hãng 100% - Đổi trả trong 30 ngày";
+            }
+            ?>
+
             <!-- Hot Promotions Box -->
             <div class="hot-promo-box">
                 <div class="hot-promo-title">
                     <i class="bi bi-gift-fill"></i> KHUYẾN MÃI HẤP DẪN
                 </div>
                 <ul class="promo-item-list">
-                    <li><i class="bi bi-check-circle-fill text-success"></i> Tặng Voucher 200.000đ khi thanh toán qua PayOS QR</li>
-                    <li><i class="bi bi-check-circle-fill text-success"></i> Miễn phí vận chuyển giao nhanh tận nhà trong 2H</li>
-                    <li><i class="bi bi-check-circle-fill text-success"></i> Giảm thêm 10% khi mua kèm Bàn phím / Chuột Gaming</li>
+                    <?php foreach ($promotions as $promo): ?>
+                        <li><i class="bi bi-check-circle-fill text-success"></i> <?= htmlspecialchars($promo) ?></li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
 

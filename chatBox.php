@@ -23,6 +23,18 @@ if (isset($_GET['newChatAi'])) {
 
 
 
+if (isset($_GET['rate_ai'])) {
+    $logId = (int)($_GET['log_id'] ?? 0);
+    $rating = (int)($_GET['rating'] ?? 0);
+    if ($logId > 0) {
+        $geminiService = new GeminiService();
+        $geminiService->rateResponse($logId, $rating);
+    }
+    header('Content-Type: application/json');
+    echo json_encode(['status' => 'success']);
+    exit;
+}
+
 if (!isset($_SESSION['chat_history'])) {
     $_SESSION['chat_history'] = [];
 }
@@ -38,9 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ai_message'])) {
     } else {
         $geminiService = new GeminiService();
         $aiChatResponse = $geminiService->ask($message);
+        $logId = $geminiService->getLastLogId();
 
         $timestamp = date('H:i d/m/Y');
         $_SESSION['chat_history'][] = [
+            'log_id' => $logId,
             'user_message' => $message,
             'ai_response' => $aiChatResponse,
             'timestamp' => $timestamp
@@ -102,7 +116,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ai_message'])) {
                             echo $htmlFormatted ?>
                         </div>
                     </div>
-                    <div class="small text-muted mt-1" style="margin-left: 40px;"><?= $chat['timestamp'] ?></div>
+                    <div class="d-flex align-items-center gap-2 mt-1" style="margin-left: 40px; font-size: 11px;">
+                        <span class="text-muted"><?= $chat['timestamp'] ?></span>
+                        <?php if (!empty($chat['log_id'])): ?>
+                            <span class="ms-2">
+                                <button type="button" class="btn btn-sm btn-link text-muted p-0 me-2 rate-btn" data-log-id="<?= $chat['log_id'] ?>" data-rating="1" title="Hài lòng">
+                                    <i class="bi bi-hand-thumbs-up"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-link text-muted p-0 rate-btn" data-log-id="<?= $chat['log_id'] ?>" data-rating="-1" title="Chưa hài lòng">
+                                    <i class="bi bi-hand-thumbs-down"></i>
+                                </button>
+                            </span>
+                        <?php endif; ?>
+                    </div>
                 </div>
             <?php } ?>
         <?php endif; ?>
@@ -145,6 +171,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ai_message'])) {
             });
         }
 
+        document.querySelectorAll(".rate-btn").forEach(btn => {
+            btn.addEventListener("click", function() {
+                const logId = this.getAttribute("data-log-id");
+                const rating = this.getAttribute("data-rating");
+                fetch("?rate_ai=1&log_id=" + logId + "&rating=" + rating).then(res => res.json()).then(data => {
+                    if (data.status === 'success') {
+                        this.classList.remove("text-muted");
+                        this.classList.add(rating === "1" ? "text-success" : "text-danger");
+                    }
+                });
+            });
+        });
 
         const content = document.getElementById("ai-chat-content");
         if (content) {

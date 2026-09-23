@@ -28,9 +28,19 @@ require_once  './models/PasswordResetToken.php';
 
 
 require_once  './models/Image.php';
+require_once  './models/AiKnowledgeBase.php';
+require_once  './models/AiLog.php';
 
 $passwordReset = new PasswordResetToken();
 $passwordReset->createTable();
+
+$aiKnowledgeBase = new AiKnowledgeBase();
+$aiKnowledgeBase->createTable();
+$aiKnowledgeBase->seedDefaultKnowledge();
+
+$aiLog = new AiLog();
+$aiLog->createTable();
+
 
 
 $branch = new Branch();

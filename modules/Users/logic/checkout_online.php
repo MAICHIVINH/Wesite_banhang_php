@@ -12,6 +12,26 @@ if (empty($branchId)) {
     exit;
 }
 
+// Kiểm tra tồn kho tại chi nhánh đã chọn TRƯỚC KHI chuyển sang trang thanh toán online
+foreach ($_POST['selected'] as $id) {
+    if (isset($cart[$id])) {
+        $productInventory = $inventoryController->getProductInventory($id, $branchId, true);
+        $stockQuantity = (!empty($productInventory) && isset($productInventory['stock_quantity'])) ? (int)$productInventory['stock_quantity'] : 0;
+        $quantity = (int)$cart[$id]['quantity'];
+
+        if ($stockQuantity < $quantity) {
+            $productById = $product->getById($id);
+            $pName = $productById['name'] ?? 'sản phẩm';
+            if ($stockQuantity <= 0) {
+                swal_alert('warning', 'Hết hàng tại chi nhánh', "Cửa hàng hiện tại không có sẵn \"{$pName}\". Vui lòng chọn cửa hàng khác!", 'index.php?subpage=modules/Users/page/Cart.php');
+            } else {
+                swal_alert('warning', 'Không đủ hàng', "Cửa hàng hiện tại chỉ còn {$stockQuantity} \"{$pName}\", không đủ số lượng bạn mua ({$quantity})!", 'index.php?subpage=modules/Users/page/Cart.php');
+            }
+            exit;
+        }
+    }
+}
+
 $totalAmount = 0;
 $itemsToBuy = [];
 

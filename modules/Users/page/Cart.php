@@ -17,7 +17,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     //đặt hàng 
-    if ($action === 'checkout' && !empty($_POST['selected'])) {
+    if ($action === 'checkout') {
+        if (empty($_POST['selected'])) {
+            swal_alert('warning', 'Chưa chọn sản phẩm', 'Vui lòng tích chọn ít nhất 1 sản phẩm để thanh toán.', 'index.php?subpage=modules/Users/page/Cart.php');
+            exit;
+        }
+
         $branch = $_POST['branch_id'];
         $method = $_POST['payment_method'] ?? 'cod';
 
@@ -65,19 +70,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 case 'inc':
                     $branch = $_POST['branch_id'];
                     if (empty($branch)) {
-                        swal_alert('warning', 'Chọn cửa hàng', 'Bạn cần chọn cửa hàng đẻ tôi kiểm tra kho hàng cho bạn!');
+                        swal_alert('warning', 'Chọn cửa hàng', 'Bạn cần chọn cửa hàng để tôi kiểm tra kho hàng cho bạn!');
                         break;
                     } else {
                         $productInventory = $inventoryController->getProductInventory($id, $branch, true);
-                        if (!$_SESSION['branch_select']) {
+                        $stockQuantity = (!empty($productInventory) && isset($productInventory['stock_quantity'])) ? (int)$productInventory['stock_quantity'] : 0;
+                        if (!isset($_SESSION['branch_select'])) {
                             $_SESSION['branch_select'] = $branch;
                         }
-                        if ($cart[$id]['quantity'] >= $productInventory['stock_quantity']) {
-                            // echo "<script>
-                            //     alert('Cưa hàng hiện tại không đủ số lượng bạn mua!');
-                            // </script>";
+                        if ($cart[$id]['quantity'] >= $stockQuantity) {
                             swal_alert('warning', 'Không đủ hàng', 'Cửa hàng hiện tại không đủ số lượng bạn mua!');
-
                             break;
                         }
                         $cart[$id]['quantity']++;

@@ -163,6 +163,46 @@ docker run -d --name garena_redis -p 6379:6379 redis:alpine
 
 ---
 
+## 🕷️ Hướng Dẫn Chạy Tool Cào Dữ Liệu Giá Thị Trường (Data Scraper)
+
+Hệ thống tích hợp công cụ tự động cào dữ liệu giá đối thủ (Thế Giới Di Động, FPT Shop, CellphoneS...) để hỗ trợ tính năng **So sánh giá thị trường** trong Trang Admin và Trang chi tiết sản phẩm.
+
+Thư mục công cụ: `scripts/scraper/`
+
+### Cách 1: Chạy bằng PHP Script (Cào thực tế - Khuyên dùng)
+
+File `real_scraper.php` sẽ tự động tìm kiếm thông tin và cập nhật bảng `competitor_prices` trong MySQL:
+
+```bash
+# Chạy trực tiếp script PHP từ thư mục gốc dự án
+php scripts/scraper/real_scraper.php
+```
+
+### Cách 2: Chạy bằng Python Script
+
+Nếu môi trường của bạn đã cài đặt Python 3, bạn có thể sử dụng script Python `scrape_prices.py`:
+
+1. **Cài đặt các thư viện cần thiết**:
+   ```bash
+   pip install -r scripts/scraper/requirements.txt
+   ```
+   *(Thư viện bao gồm: `requests`, `beautifulsoup4`, `mysql-connector-python`)*
+
+2. **Chạy script**:
+   ```bash
+   python scripts/scraper/scrape_prices.py
+   ```
+
+### Cách 3: Nạp dữ liệu giả lập mẫu (Seeder Nhanh)
+
+Để nạp dữ liệu so sánh giá mẫu tức thì (dùng cho việc test offline hoặc chưa có kết nối mạng):
+
+```bash
+php scripts/scraper/seed_prices.php
+```
+
+---
+
 ## 📝 Đóng Góp & Hỗ Trợ
 Dự án được phát triển và duy trì bởi đội ngũ **GARENA E-Sports Store**. Nếu bạn gặp bất kỳ vấn đề gì trong quá trình cài đặt hoặc vận hành, vui lòng liên hệ bộ phận hỗ trợ kỹ thuật.
 

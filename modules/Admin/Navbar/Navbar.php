@@ -9,7 +9,7 @@
                    -webkit-text-fill-color: transparent;
                    background-clip: text;
                    color: transparent;
-                   margin-left: 10px"> Hệ thống quản lý GARENA</h2>
+                   margin-left: 10px"> </h2>
         <span class="navbar-brand" style="font-weight: 600; font-size: 1.5rem;"></span>
         <div class="navbar-nav ms-3 align-items-center">
 

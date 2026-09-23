@@ -10,6 +10,13 @@ $getCategory = $category->getAll();
 // Banner động từ cơ sở dữ liệu
 $sliderBanners = isset($bannerController) ? $bannerController->getByPosition('slider_main') : [];
 $sideBanners = isset($bannerController) ? $bannerController->getByPosition('side_banner') : [];
+
+// Cấu hình Flash Sale từ Cơ sở dữ liệu
+$flashSaleConfig = isset($flashSaleController) ? $flashSaleController->getConfig() : [
+    'title' => 'HOT SALE GIÁ SỐC',
+    'end_time' => date('Y-m-d H:i:s', strtotime('+3 days')),
+    'status' => 1
+];
 ?>
 
 <style>
@@ -200,14 +207,16 @@ $sideBanners = isset($bannerController) ? $bannerController->getByPosition('side
     <div class="flash-sale-box">
         <div class="flash-sale-header">
             <div class="flash-sale-title">
-                <i class="bi bi-lightning-charge-fill text-warning fs-3"></i> HOT SALE GIÁ SỐC
+                <i class="bi bi-lightning-charge-fill text-warning fs-3"></i> <?= htmlspecialchars($flashSaleConfig['title'] ?? 'HOT SALE GIÁ SỐC') ?>
             </div>
-            <div class="countdown-box d-none d-sm-flex">
-                <span>KẾT THÚC TRONG:</span>
-                <span class="countdown-item">08</span> :
-                <span class="countdown-item">45</span> :
-                <span class="countdown-item">12</span>
-            </div>
+            <?php if (($flashSaleConfig['status'] ?? 1) == 1): ?>
+                <div class="countdown-box d-none d-sm-flex">
+                    <span>KẾT THÚC TRONG:</span>
+                    <span class="countdown-item" id="cd-hours">00</span> :
+                    <span class="countdown-item" id="cd-minutes">00</span> :
+                    <span class="countdown-item" id="cd-seconds">00</span>
+                </div>
+            <?php endif; ?>
         </div>
         <div class="row g-3">
             <?php 
@@ -428,6 +437,42 @@ $sideBanners = isset($bannerController) ? $bannerController->getByPosition('side
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#saleCarousel" data-bs-slide="next">
             <span class="carousel-control-next-icon"></span>
-        </button>
     </div>
 </div>
+
+<script>
+    (function() {
+        const endTimeStr = "<?= htmlspecialchars($flashSaleConfig['end_time'] ?? '') ?>";
+        const status = <?= (int)($flashSaleConfig['status'] ?? 0) ?>;
+
+        if (status !== 1 || !endTimeStr) return;
+
+        const targetDate = new Date(endTimeStr).getTime();
+        const hoursEl = document.getElementById('cd-hours');
+        const minutesEl = document.getElementById('cd-minutes');
+        const secondsEl = document.getElementById('cd-seconds');
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+
+            if (isNaN(diff) || diff <= 0) {
+                if (hoursEl) hoursEl.textContent = '00';
+                if (minutesEl) minutesEl.textContent = '00';
+                if (secondsEl) secondsEl.textContent = '00';
+                return;
+            }
+
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+            if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
+            if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    })();
+</script>

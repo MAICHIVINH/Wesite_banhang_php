@@ -29,6 +29,7 @@ require_once './controllers/BranchController.php';
 require_once './controllers/ShippingController.php';
 require_once './controllers/AdminController.php';
 require_once './controllers/BannerController.php';
+require_once './controllers/FlashSaleController.php';
 
 
 
@@ -54,6 +55,7 @@ $branchController = new BranchController();
 $shippingController = new ShippingController();
 $adminController = new AdminController();
 $bannerController = new BannerController();
+$flashSaleController = new FlashSaleController();
 
 $userList = $chatController->getAllChatUserIdsFromRedis();
 $userId = $_GET['chat_user_id'] ?? null;
@@ -80,12 +82,12 @@ if (isset($_GET['ajax_get_admin_chat']) || isset($_POST['ajax_send_admin_chat'])
 
 <head>
     <meta charset="UTF-8">
-    <title>BVCrew</title>
+    <title>GARENA</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./Style/Admin/notification.css">
 
     <link rel="stylesheet" href="./Style/Admin/style.css">
     <link rel="stylesheet" href="./Style/Admin/Navbar.css">
@@ -152,7 +154,9 @@ if (isset($_GET['ajax_get_admin_chat']) || isset($_POST['ajax_send_admin_chat'])
             <?php require './modules/Admin/Sidebar/Sidebar.php'; ?>
             <div class="content">
                 <?php
-                if (isset($_GET['page']) && file_exists($_GET['page'])) {
+                if (isset($_GET['page']) && $_GET['page'] === 'flash_sale') {
+                    require './modules/Admin/FlashSale/FlashSale.php';
+                } elseif (isset($_GET['page']) && file_exists($_GET['page'])) {
                     require $_GET['page'];
                 } else {
                     require './modules/Admin/Dashboard/index.php';

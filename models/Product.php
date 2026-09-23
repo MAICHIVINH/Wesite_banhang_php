@@ -217,4 +217,19 @@
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
+
+        public function getAllActiveProductsWithCategory()
+        {
+            $sql = "
+                SELECT p.*, c.name AS category_name, s.name AS supplier_name
+                FROM products p
+                LEFT JOIN categories c ON p.category_id = c.id
+                LEFT JOIN suppliers s ON p.supplier_id = s.id
+                WHERE p.isDeleted = 0
+                ORDER BY c.name ASC, p.id DESC
+            ";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
     }

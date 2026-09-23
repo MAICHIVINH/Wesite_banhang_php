@@ -46,7 +46,7 @@ class UserController extends BaseController
         $this->chatModel = new ChatMessage();
         $this->reportModel = new UserReports();
         $this->reviewModel = new Review();
-        $this->jwtConfig = include   './config/jwt.php';
+        $this->jwtConfig = include './config/jwt.php';
     }
 
     public function getById($id)
@@ -76,7 +76,7 @@ class UserController extends BaseController
         if (!$this->validator->validate($data, $rules)) {
             return [
                 'success' => false,
-                'message'  => $this->validator->error()
+                'message' => $this->validator->error()
             ];
         }
 
@@ -297,23 +297,61 @@ class UserController extends BaseController
         $mail = new PHPMailer(true);
 
         try {
+            // Charset & Encoding for UTF-8 support (fixes broken Vietnamese characters)
+            $mail->CharSet = 'UTF-8';
+            $mail->Encoding = 'base64';
+
             // Server settings
             $mail->isSMTP();
-            $mail->Host       = 'smtp.gmail.com'; // Hoặc SMTP server khác
-            $mail->SMTPAuth   = true;
-            $mail->Username   = 'lephuocbinh.2000@gmail.com';     // Tài khoản Gmail
-            $mail->Password = 'yhgpditruzfxxqpn';
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'vinh23861@gmail.com';
+            $mail->Password = 'qrkssypizvrenvgn';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port       = 587;
+            $mail->Port = 587;
 
             // Recipients
-            $mail->setFrom('lephuocbinh.2000@gmail.com', 'Shop Electronic');
-            $mail->addAddress($toEmail);     // Gửi đến người nhận
+            $mail->setFrom('vinh23861@gmail.com', 'MCV Shop');
+            $mail->addAddress($toEmail);
 
             // Content
             $mail->isHTML(true);
-            $mail->Subject = 'Mã xác nhận của bạn';
-            $mail->Body    = "<p>Xin chào,</p><p>Mã xác nhận của bạn là: <strong>$code</strong></p>";
+            $mail->Subject = 'Mã xác nhận đặt lại mật khẩu - MCV Shop';
+
+            $currentYear = date('Y');
+            $mail->Body = "
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset='UTF-8'>
+                <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            </head>
+            <body style='font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px;'>
+                <div style='max-width: 520px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border: 1px solid #e2e8f0;'>
+                    <div style='background: linear-gradient(135deg, #d70018 0%, #ff4757 100%); padding: 24px 20px; text-align: center; color: #ffffff;'>
+                        <h2 style='margin: 0; font-size: 22px; font-weight: bold; letter-spacing: 0.5px;'>MCV SHOP</h2>
+                        <p style='margin: 6px 0 0; font-size: 13px; opacity: 0.9;'>Xác nhận yêu cầu đặt lại mật khẩu</p>
+                    </div>
+                    <div style='padding: 28px 24px; text-align: center; color: #334155;'>
+                        <p style='font-size: 15px; margin-bottom: 8px; font-weight: 600;'>Xin chào,</p>
+                        <p style='font-size: 14px; color: #64748b; margin-top: 0; line-height: 1.5;'>Bạn vừa yêu cầu lấy lại mật khẩu cho tài khoản tại MCV Shop. Vui lòng sử dụng mã OTP bên dưới để hoàn tất:</p>
+                        
+                        <div style='background: #f8fafc; border: 2px dashed #d70018; border-radius: 10px; padding: 16px 20px; display: inline-block; margin: 20px 0;'>
+                            <span style='font-size: 34px; font-weight: 800; letter-spacing: 6px; color: #d70018; font-family: monospace;'>{$code}</span>
+                        </div>
+
+                        <p style='font-size: 13px; color: #64748b; margin-top: 10px; line-height: 1.5;'>
+                            ⏱️ Mã này có hiệu lực trong <strong>5 phút</strong>.<br>
+                            🔒 Vì lý do bảo mật, tuyệt đối <strong>không chia sẻ mã này</strong> cho bất kỳ ai.
+                        </p>
+                    </div>
+                    <div style='background: #f8fafc; padding: 14px 20px; text-align: center; font-size: 12px; color: #94a3b8; border-top: 1px solid #f1f5f9;'>
+                        <p style='margin: 0;'>© {$currentYear} MCV Shop Electronics. Trân trọng cảm ơn!</p>
+                    </div>
+                </div>
+            </body>
+            </html>
+            ";
 
             $mail->send();
             return true;
@@ -390,7 +428,8 @@ class UserController extends BaseController
         $writer = new Xlsx($spreadsheet);
         $filename = 'products_' . date('Y-m-d') . '.xlsx';
 
-        if (ob_get_length()) ob_end_clean();
+        if (ob_get_length())
+            ob_end_clean();
 
         $filepath = 'exports/' . $filename;
         $writer->save($filepath);

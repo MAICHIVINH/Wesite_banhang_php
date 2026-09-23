@@ -123,9 +123,11 @@ if (empty($activeBanners) && isset($bannerController)) {
     <div class="container d-flex justify-content-between align-items-center">
         <!-- Left: Ticker Highlights -->
         <div class="top-bar-ticker">
-            <span><i class="bi bi-arrow-repeat text-warning"></i> <strong>Thu cũ giá ngon</strong> - Lên đời tiết kiệm</span>
+            <span><i class="bi bi-arrow-repeat text-warning"></i> <strong>Thu cũ giá ngon</strong> - Lên đời tiết
+                kiệm</span>
             <span class="top-bar-ticker-separator">•</span>
-            <span><i class="bi bi-shield-check text-warning"></i> Sản phẩm <strong>Chính hãng</strong> - Xuất VAT đầy đủ</span>
+            <span><i class="bi bi-shield-check text-warning"></i> Sản phẩm <strong>Chính hãng</strong> - Xuất VAT đầy
+                đủ</span>
             <span class="top-bar-ticker-separator">•</span>
             <span><i class="bi bi-truck text-warning"></i> <strong>Giao nhanh - Miễn phí</strong> cho đơn từ 300k</span>
         </div>
@@ -153,29 +155,33 @@ if (empty($activeBanners) && isset($bannerController)) {
         <!-- Logo -->
         <a class="brand-logo-cellphones me-3" href="index.php">
             <!-- <i class="bi bi-laptop text-warning"></i> GARENA -->
-             GARENA
+            MCV Shop
         </a>
 
-        <button class="navbar-toggler text-white border-white mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+        <button class="navbar-toggler text-white border-white mb-2" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarMain">
             <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarMain">
-            <div class="d-flex flex-column flex-lg-row align-items-lg-center w-100 justify-content-between gap-2 gap-lg-3">
-                
+            <div
+                class="d-flex flex-column flex-lg-row align-items-lg-center w-100 justify-content-between gap-2 gap-lg-3">
+
                 <!-- Group Left: Category Dropdown + Search Bar -->
                 <div class="d-flex flex-column flex-md-row align-items-md-center flex-grow-1 gap-2 gap-lg-3">
-                    
+
                     <!-- Mega Menu Danh Mục -->
                     <div class="dropdown">
-                        <a class="btn-category-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="btn-category-toggle" href="#" id="categoryDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-list fs-5"></i>
                             <span>Danh mục</span>
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-grid p-2 shadow" aria-labelledby="categoryDropdown">
                             <li>
-                                <a class="dropdown-item fw-bold text-danger" href="index.php?subpage=modules/Users/Layout/Main.php">
+                                <a class="dropdown-item fw-bold text-danger"
+                                    href="index.php?subpage=modules/Users/Layout/Main.php">
                                     <i class="bi bi-grid-fill me-1"></i> Tất cả danh mục
                                 </a>
                             </li>
@@ -183,7 +189,8 @@ if (empty($activeBanners) && isset($bannerController)) {
                                 if ($item['status'] === 0) {
                                     ?>
                                     <li>
-                                        <a class="dropdown-item" href="index.php?subpage=modules/Users/Layout/Main.php&category=<?= $item['id'] ?><?= isset($_GET['supplier']) ? '&supplier=' . $_GET['supplier'] : '' ?>">
+                                        <a class="dropdown-item"
+                                            href="index.php?subpage=modules/Users/Layout/Main.php&category=<?= $item['id'] ?><?= isset($_GET['supplier']) ? '&supplier=' . $_GET['supplier'] : '' ?>">
                                             <i class="bi bi-tag me-1 text-danger"></i> <?= htmlspecialchars($item['name']) ?>
                                         </a>
                                     </li>
@@ -197,20 +204,23 @@ if (empty($activeBanners) && isset($bannerController)) {
                     <div class="search-cellphones-group flex-grow-1">
                         <form action="index.php" method="get" class="d-flex">
                             <input type="hidden" name="subpage" value="modules/Users/Layout/Main.php">
-                            <input type="hidden" name="category" value="<?= htmlspecialchars($_GET['category'] ?? '') ?>">
-                            <input type="hidden" name="supplier" value="<?= htmlspecialchars($_GET['supplier'] ?? '') ?>">
-                            
+                            <input type="hidden" name="category"
+                                value="<?= htmlspecialchars($_GET['category'] ?? '') ?>">
+                            <input type="hidden" name="supplier"
+                                value="<?= htmlspecialchars($_GET['supplier'] ?? '') ?>">
+
                             <input type="search" name="search" class="form-control search-cellphones-input"
-                                placeholder="Bạn cần tìm sản phẩm gì? (VD: Laptop Gaming, MacBook...)" 
+                                placeholder="Bạn cần tìm sản phẩm gì? (VD: Laptop Gaming, MacBook...)"
                                 value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
                             <button class="btn search-cellphones-btn" type="submit">
                                 <i class="bi bi-search"></i>
                             </button>
                         </form>
-                        
+
                         <!-- Hot Search Keywords -->
                         <div class="hot-keywords d-none d-md-flex">
-                            <a href="index.php?subpage=modules/Users/Layout/Main.php&search=Laptop+Gaming">Laptop Gaming</a>
+                            <a href="index.php?subpage=modules/Users/Layout/Main.php&search=Laptop+Gaming">Laptop
+                                Gaming</a>
                             <a href="index.php?subpage=modules/Users/Layout/Main.php&search=MacBook">MacBook Air</a>
                             <a href="index.php?subpage=modules/Users/Layout/Main.php&search=RTX">Card RTX</a>
                             <a href="index.php?subpage=modules/Users/Layout/Main.php&search=Tai+nghe">Tai nghe</a>
@@ -222,7 +232,7 @@ if (empty($activeBanners) && isset($bannerController)) {
 
                 <!-- Group Right: Utility Action Pills -->
                 <div class="d-flex align-items-center flex-wrap gap-2">
-                    
+
                     <!-- Hotline Call -->
                     <a href="tel:18006789" class="header-action-item d-none d-xl-flex">
                         <i class="bi bi-telephone-outbound header-action-icon text-warning"></i>
@@ -260,22 +270,28 @@ if (empty($activeBanners) && isset($bannerController)) {
                         </a>
                     <?php } else { ?>
                         <div class="dropdown">
-                            <a class="header-action-item dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="header-action-item dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-person-circle header-action-icon text-warning"></i>
                                 <span><?= htmlspecialchars($userData->name) ?></span>
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3 mt-2" aria-labelledby="userDropdown">
+                            <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3 mt-2"
+                                aria-labelledby="userDropdown">
                                 <li>
-                                    <a class="dropdown-item py-2" href="#" data-bs-toggle="modal" data-bs-target="#accountModal">
+                                    <a class="dropdown-item py-2" href="#" data-bs-toggle="modal"
+                                        data-bs-target="#accountModal">
                                         <i class="bi bi-person-gear me-2 text-primary"></i> Tài khoản của tôi
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item py-2" href="index.php?subpage=modules/Users/page/CheckOrder.php">
+                                    <a class="dropdown-item py-2"
+                                        href="index.php?subpage=modules/Users/page/CheckOrder.php">
                                         <i class="bi bi-box-seam me-2 text-success"></i> Quản lý đơn hàng
                                     </a>
                                 </li>
-                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
                                 <li>
                                     <a class="dropdown-item py-2 text-danger fw-bold" href="logout.php">
                                         <i class="bi bi-box-arrow-right me-2"></i> Đăng xuất
@@ -396,8 +412,7 @@ if (empty($activeBanners) && isset($bannerController)) {
                 <div class="modal-body p-4 bg-light">
                     <div class="card border-0 shadow-sm rounded-3 p-3 bg-white">
                         <div class="mb-3">
-                            <label class="form-label small fw-bold text-muted mb-1"><i
-                                    class="bi bi-envelope me-1 text-danger"></i>Địa chỉ Email</label>
+                            <label class="form-label small fw-bold text-muted mb-1">Địa chỉ Email</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light border-end-0 text-danger"><i
                                         class="bi bi-envelope-at"></i></span>
@@ -406,8 +421,7 @@ if (empty($activeBanners) && isset($bannerController)) {
                             </div>
                         </div>
                         <div class="mb-2">
-                            <label class="form-label small fw-bold text-muted mb-1"><i
-                                    class="bi bi-key me-1 text-danger"></i>Mật khẩu</label>
+                            <label class="form-label small fw-bold text-muted mb-1">Mật khẩu</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light border-end-0 text-danger"><i
                                         class="bi bi-lock"></i></span>
@@ -428,7 +442,7 @@ if (empty($activeBanners) && isset($bannerController)) {
                         </div>
                         <button class="btn btn-danger w-100 rounded-pill py-2.5 fw-bold shadow-sm" type="submit"
                             name="login">
-                            <i class="bi bi-box-arrow-in-right me-1"></i> Đăng Nhập
+                             Đăng Nhập
                         </button>
                     </div>
                     <div class="text-center mt-3">
@@ -466,8 +480,7 @@ if (empty($activeBanners) && isset($bannerController)) {
                     <div class="card border-0 shadow-sm rounded-3 p-3 bg-white">
                         <div class="row g-2">
                             <div class="col-md-6 mb-2">
-                                <label class="form-label small fw-bold text-muted mb-1"><i
-                                        class="bi bi-person me-1 text-success"></i>Họ và Tên</label>
+                                <label class="form-label small fw-bold text-muted mb-1">Họ và Tên</label>
                                 <div class="input-group input-group-sm">
                                     <span class="input-group-text bg-light border-end-0 text-success"><i
                                             class="bi bi-person-vcard"></i></span>
@@ -476,11 +489,10 @@ if (empty($activeBanners) && isset($bannerController)) {
                                 </div>
                             </div>
                             <div class="col-md-6 mb-2">
-                                <label class="form-label small fw-bold text-muted mb-1"><i
-                                        class="bi bi-telephone me-1 text-success"></i>Số điện thoại</label>
+                                <label class="form-label small fw-bold text-muted mb-1">Số điện thoại</label>
                                 <div class="input-group input-group-sm">
                                     <span class="input-group-text bg-light border-end-0 text-success"><i
-                                            class="bi bi-phone"></i></span>
+                                        class="bi bi-telephone me-1 text-success"></i></span>
                                     <input type="text" name="phone" class="form-control border-start-0 bg-light"
                                         placeholder="0901234567" required>
                                 </div>
@@ -488,8 +500,7 @@ if (empty($activeBanners) && isset($bannerController)) {
                         </div>
 
                         <div class="mb-2">
-                            <label class="form-label small fw-bold text-muted mb-1"><i
-                                    class="bi bi-envelope me-1 text-success"></i>Địa chỉ Email</label>
+                            <label class="form-label small fw-bold text-muted mb-1">Địa chỉ Email</label>
                             <div class="input-group input-group-sm">
                                 <span class="input-group-text bg-light border-end-0 text-success"><i
                                         class="bi bi-envelope-at"></i></span>
@@ -499,11 +510,10 @@ if (empty($activeBanners) && isset($bannerController)) {
                         </div>
 
                         <div class="mb-2">
-                            <label class="form-label small fw-bold text-muted mb-1"><i
-                                    class="bi bi-geo-alt me-1 text-success"></i>Địa chỉ giao hàng</label>
+                            <label class="form-label small fw-bold text-muted mb-1">Địa chỉ giao hàng</label>
                             <div class="input-group input-group-sm">
                                 <span class="input-group-text bg-light border-end-0 text-success"><i
-                                        class="bi bi-house-door"></i></span>
+                                    class="bi bi-geo-alt me-1 text-success"></i></span>
                                 <input type="text" name="address" class="form-control border-start-0 bg-light"
                                     placeholder="Số nhà, Tên đường, Tỉnh/Thành phố" required>
                             </div>
@@ -511,8 +521,7 @@ if (empty($activeBanners) && isset($bannerController)) {
 
                         <div class="row g-2 mb-2">
                             <div class="col-md-6 mb-2 mb-md-0">
-                                <label class="form-label small fw-bold text-muted mb-1"><i
-                                        class="bi bi-lock me-1 text-success"></i>Mật khẩu</label>
+                                <label class="form-label small fw-bold text-muted mb-1">Mật khẩu</label>
                                 <div class="input-group input-group-sm">
                                     <span class="input-group-text bg-light border-end-0 text-success"><i
                                             class="bi bi-key"></i></span>
@@ -526,8 +535,7 @@ if (empty($activeBanners) && isset($bannerController)) {
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label small fw-bold text-muted mb-1"><i
-                                        class="bi bi-shield-lock me-1 text-success"></i>Nhập lại mật khẩu</label>
+                                <label class="form-label small fw-bold text-muted mb-1">Nhập lại mật khẩu</label>
                                 <div class="input-group input-group-sm">
                                     <span class="input-group-text bg-light border-end-0 text-success"><i
                                             class="bi bi-shield-check"></i></span>

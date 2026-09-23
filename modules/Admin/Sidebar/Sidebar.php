@@ -37,6 +37,9 @@ $is_stats_active = in_array($currentPage, [
       <li class="<?= ($currentPage == 'modules/Admin/Banners/Banner.php') ? 'active' : '' ?>">
         <a href="Admin.php?page=modules/Admin/Banners/Banner.php"><i class="fas fa-images"></i> Quản lý Banner</a>
       </li>
+      <li class="<?= ($currentPage == 'modules/Admin/FlashSale/FlashSale.php' || $currentPage == 'flash_sale') ? 'active' : '' ?>">
+        <a href="Admin.php?page=modules/Admin/FlashSale/FlashSale.php"><i class="fas fa-bolt"></i> Quản lý Flash Sale</a>
+      </li>
     </ul>
 
     <!-- 3. SẢN PHẨM & KHO HÀNG -->
@@ -81,7 +84,15 @@ $is_stats_active = in_array($currentPage, [
       </li>
     </ul>
 
-    <!-- 6. HỆ THỐNG -->
+    <!-- 6. TRỢ LÝ AI & HUẤN LUYỆN -->
+    <div class="sidebar-section-title">TRỢ LÝ AI & HUẤN LUYỆN</div>
+    <ul>
+      <li class="<?= ($currentPage == 'modules/Admin/AiTraining/index.php') ? 'active' : '' ?>">
+        <a href="Admin.php?page=modules/Admin/AiTraining/index.php"><i class="fas fa-brain"></i> Huấn luyện & Tri thức AI</a>
+      </li>
+    </ul>
+
+    <!-- 7. HỆ THỐNG -->
     <div class="sidebar-section-title">HỆ THỐNG</div>
     <ul>
       <li class="<?= ($currentPage == 'modules/Admin/Menus/Menu.php') ? 'active' : '' ?>">
