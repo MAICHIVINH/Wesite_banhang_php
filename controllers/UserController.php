@@ -305,8 +305,8 @@ class UserController extends BaseController
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'vinh23861@gmail.com';
-            $mail->Password = 'qrkssypizvrenvgn';
+            $mail->Username = '';
+            $mail->Password = '';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
