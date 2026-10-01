@@ -1,11 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const editButtons = document.querySelectorAll(
-    'button.btn-primary[data-bs-toggle="modal"][data-bs-target="#editItemModal"]'
-  );
+  const editModal = document.getElementById("editItemModal");
 
-  editButtons.forEach((button) => {
-    button.addEventListener("click", function (e) {
-      e.preventDefault();
+  if (editModal) {
+    editModal.addEventListener("show.bs.modal", function (event) {
+      const button = event.relatedTarget;
+      if (!button) return;
 
       const id = button.getAttribute("data-id");
       const productName = button.getAttribute("data-product-name");
@@ -19,24 +18,47 @@ document.addEventListener("DOMContentLoaded", function () {
       const productIdInput = document.getElementById("editIdProduct");
       const branchSelect = document.getElementById("editItemBranch");
 
-      if (
-        warehouseIdInput &&
-        productNameInput &&
-        quantityInput &&
-        productIdInput &&
-        branchSelect
-      ) {
-        warehouseIdInput.value = id || "";
-        productNameInput.value = productName || "";
-        quantityInput.value = stockQuantity || "0";
-        productIdInput.value = productId || "";
+      if (warehouseIdInput) warehouseIdInput.value = id || "";
+      if (productNameInput) productNameInput.value = productName || "";
+      if (quantityInput) quantityInput.value = stockQuantity || "0";
+      if (productIdInput) productIdInput.value = productId || "";
 
-        // ✅ Set branch selected
+      if (branchSelect) {
         for (const option of branchSelect.options) {
-          option.selected = option.value === branch;
+          option.selected = String(option.value) === String(branch);
         }
-      } else {
-        console.error("Thiếu element trong modal SỬA");
+      }
+    });
+  }
+
+  // Also support click event handler as fallback
+  const editButtons = document.querySelectorAll(
+    'button[data-bs-target="#editItemModal"], a[data-bs-target="#editItemModal"]'
+  );
+
+  editButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const id = button.getAttribute("data-id");
+      const productName = button.getAttribute("data-product-name");
+      const stockQuantity = button.getAttribute("data-stock-quantity");
+      const productId = button.getAttribute("data-product-id");
+      const branch = button.getAttribute("data-branch-id");
+
+      const warehouseIdInput = document.getElementById("editItemWarehouseId");
+      const productNameInput = document.getElementById("editItemProductName");
+      const quantityInput = document.getElementById("editItemQuantity");
+      const productIdInput = document.getElementById("editIdProduct");
+      const branchSelect = document.getElementById("editItemBranch");
+
+      if (warehouseIdInput) warehouseIdInput.value = id || "";
+      if (productNameInput) productNameInput.value = productName || "";
+      if (quantityInput) quantityInput.value = stockQuantity || "0";
+      if (productIdInput) productIdInput.value = productId || "";
+
+      if (branchSelect) {
+        for (const option of branchSelect.options) {
+          option.selected = String(option.value) === String(branch);
+        }
       }
     });
   });

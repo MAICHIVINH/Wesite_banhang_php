@@ -1,8 +1,9 @@
 <?php
 ob_start();
-session_name('user_session');
-session_start();
+require_once __DIR__ . '/core/Session.php';
+Session::start('user_session');
 date_default_timezone_set('Asia/Ho_Chi_Minh');
+require_once './core/Helper.php';
 require_once './controllers/ProductController.php';
 require_once './controllers/SupplierController.php';
 require_once './controllers/CategoryController.php';

@@ -1,9 +1,6 @@
 <?php
 $keyword = $_GET['search'] ?? '';
-
-
-$keyword = $_GET["search"] ?? "";
-$page    = max(1, ($_GET['pageNumber'] ?? 1));
+$page    = max(1, (int)($_GET['pageNumber'] ?? $_GET['number'] ?? 1));
 $limit   = 6;
 $offset  = ($page - 1) * $limit;
 
@@ -62,9 +59,9 @@ require_once 'modules/Admin/Shipping/ViewCurrentLocation.php';
 
                             <tr>
                                 <td><?= $order['code'] ?></td>
-                                <td><?= $order['FullName'] ?></td>
-                                <td><?= $order['Address'] ?></td>
-                                <td><?= $order['shipping_address'] ?></td>
+                                <td><?= $order['FullName'] ?? '' ?></td>
+                                <td><?= $order['Address'] ?? '' ?></td>
+                                <td><?= $order['shipping_address'] ?? '' ?></td>
                                 <td class="text-center">
                                     <div class="dropdown">
                                         <button class="btn btn-sm btn-light border rounded-circle shadow-sm" type="button" data-bs-toggle="dropdown" data-bs-popper-config='{"strategy":"fixed"}' aria-expanded="false" style="width: 32px; height: 32px; padding: 0;">
@@ -75,9 +72,9 @@ require_once 'modules/Admin/Shipping/ViewCurrentLocation.php';
                                                 <button class="dropdown-item d-flex align-items-center gap-2"
                                                     onclick='showSenderInfo(<?= json_encode([
                                                                                 "id" => $order["code"],
-                                                                                "senderName" => $order["FullName"],
-                                                                                "senderPhone" => $order["Phone"],
-                                                                                "senderAddress" => $order["Address"]
+                                                                                "senderName" => $order["FullName"] ?? "",
+                                                                                "senderPhone" => $order["Phone"] ?? "",
+                                                                                "senderAddress" => $order["Address"] ?? ""
                                                                             ]) ?>)'>
                                                     <i class="bi bi-geo-alt-fill text-info"></i> Xem vị trí người nhận
                                                 </button>
@@ -115,17 +112,7 @@ require_once 'modules/Admin/Shipping/ViewCurrentLocation.php';
             </table>
         </div>
     </div>
-    <nav aria-label="Page navigation" class="mt-4">
-        <ul class="pagination justify-content-center">
-            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
-                    <a class="page-link" href="Admin.php?page=modules/Admin/Shipping/Shipping.php&search=<?= urlencode($keyword) ?>&pageNumber=<?= $i ?>">
-                        <?= $i ?>
-                    </a>
-                </li>
-            <?php endfor; ?>
-        </ul>
-    </nav>
+    <?php renderPagination($totalPages, $page, null, 'pageNumber'); ?>
 </div>
 
 <script>

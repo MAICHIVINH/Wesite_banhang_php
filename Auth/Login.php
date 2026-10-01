@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . '/../core/Session.php';
+Session::start('admin_session');
+require_once __DIR__ . '/../core/Csrf.php';
+?>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -40,6 +45,7 @@
             </div>
 
             <form id="loginForm" method="post" class="space-y-6" action="../Admin.php">
+                <?= Csrf::field(); ?>
                 <div>
                     <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Email đăng nhập</label>
                     <div class="relative">

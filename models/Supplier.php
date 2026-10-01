@@ -64,4 +64,30 @@ class Supplier extends Model
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return (int) ($result['total'] ?? 0);
     }
+
+    public function findByNameOrCreate($name)
+    {
+        $name = trim((string)$name);
+        if (empty($name)) return 1;
+
+        if (is_numeric($name)) {
+            $found = $this->find((int)$name);
+            if ($found) return (int)$name;
+        }
+
+        $sql = "SELECT id FROM {$this->table} WHERE LOWER(name) = LOWER(:name) AND isDeleted = 0 LIMIT 1";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['name' => $name]);
+        $supId = $stmt->fetchColumn();
+
+        if ($supId) {
+            return (int)$supId;
+        }
+
+        $insertSql = "INSERT INTO {$this->table} (name, isDeleted) VALUES (:name, 0)";
+        $insertStmt = $this->pdo->prepare($insertSql);
+        $insertStmt->execute(['name' => $name]);
+        return (int)$this->pdo->lastInsertId();
+    }
 }
+

@@ -17,6 +17,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Dotenv\Dotenv;
 
 require 'vendor/autoload.php';
 
@@ -38,6 +39,11 @@ class UserController extends BaseController
     public function __construct()
     {
         parent::__construct();
+        $envFile = __DIR__ . '/../config/.env';
+        if (file_exists($envFile)) {
+            $dotenv = Dotenv::createImmutable(dirname($envFile));
+            $dotenv->safeLoad();
+        }
         $this->userModel = new User();
         $this->userReportModel = new UserReports();
         $this->resetTokenModel = new PasswordResetToken();
@@ -305,13 +311,14 @@ class UserController extends BaseController
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = '';
-            $mail->Password = '';
+            
+            $mail->Username = $_ENV['EMAIL_ADDRESS'] ?? getenv('EMAIL_ADDRESS') ?? '';
+            $mail->Password = $_ENV['PASSWORD_RESET'] ?? getenv('PASSWORD_RESET') ?? '';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
             // Recipients
-            $mail->setFrom('vinh23861@gmail.com', 'MCV Shop');
+            $mail->setFrom($_ENV['EMAIL_ADDRESS'] ?? getenv('EMAIL_ADDRESS') ?? '', 'MCV Shop');
             $mail->addAddress($toEmail);
 
             // Content

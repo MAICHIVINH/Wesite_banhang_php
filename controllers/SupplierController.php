@@ -285,4 +285,12 @@ class SupplierController
         }
         if ($id) RedisCache::delete("supplier:$id");
     }
+
+    public function findByNameOrCreate($name)
+    {
+        $id = $this->supplierModel->findByNameOrCreate($name);
+        $this->invalidateCache();
+        return $id;
+    }
 }
+

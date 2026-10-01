@@ -166,18 +166,7 @@ $customers = $userController->getPagination($limit, $offset, $keyword);
     </div>
 
     <!-- Phân trang -->
-    <nav class="mt-4">
-        <ul class="pagination justify-content-center">
-            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                <li class="page-item <?= $i == $page ? 'active' : '' ?>">
-                    <a class="page-link"
-                        href="Admin.php?page=modules/Admin/Customers/Customer.php&search=<?= urlencode($keyword) ?>&number=<?= $i ?>">
-                        <?= $i ?>
-                    </a>
-                </li>
-            <?php endfor ?>
-        </ul>
-    </nav>
+    <?php renderPagination($totalPages, $page); ?>
 </div>
 
 

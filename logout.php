@@ -1,6 +1,6 @@
 <?php
-session_name('user_session');
-session_start();
+require_once __DIR__ . '/core/Session.php';
+Session::start('user_session');
 unset($_SESSION['jwt']);
 session_destroy();
 header("Location: index.php");

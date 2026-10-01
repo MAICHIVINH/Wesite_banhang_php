@@ -358,38 +358,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
                 </div>
             <?php } ?>
             <?php if (count($orders) > 0 && $totalPages > 1) { ?>
-                <nav class="mt-4">
-                    <ul class="pagination justify-content-center">
-
-                        <?php if ($totalPages > $groupSize && $startPage > 1): ?>
-                            <li class="page-item">
-                                <a class="page-link"
-                                    href="index.php?subpage=modules/Users/page/CheckOrder.php&search=<?= $keyword ?>&page=<?= $startPage - 1 ?>&filter_status=<?= $filterStatusId ?>&order_code=<?= urlencode($searchCode) ?>">
-                                    «
-                                </a>
-                            </li>
-                        <?php endif; ?>
-
-                        <?php for ($i = $startPage; $i <= $endPage; $i++): ?>
-                            <li class="page-item <?= $i == $page ? 'active' : '' ?>">
-                                <a class="page-link"
-                                    href="index.php?subpage=modules/Users/page/CheckOrder.php&search=<?= $keyword ?>&page=<?= $i ?>&filter_status=<?= $filterStatusId ?>&order_code=<?= urlencode($searchCode) ?>">
-                                    <?= $i ?>
-                                </a>
-                            </li>
-                        <?php endfor; ?>
-
-                        <?php if ($totalPages > $groupSize && $endPage < $totalPages): ?>
-                            <li class="page-item">
-                                <a class="page-link"
-                                    href="index.php?subpage=modules/Users/page/CheckOrder.php&search=<?= $keyword ?>&page=<?= $endPage + 1 ?>&filter_status=<?= $filterStatusId ?>&order_code=<?= urlencode($searchCode) ?>">
-                                    »
-                                </a>
-                            </li>
-                        <?php endif; ?>
-
-                    </ul>
-                </nav>
+                <?php renderPagination($totalPages, $page, null, 'page'); ?>
             <?php } ?>
         </div>
     </div>

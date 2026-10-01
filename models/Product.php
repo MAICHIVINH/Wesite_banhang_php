@@ -105,10 +105,10 @@
         // dưới đây là các hàm xử lý trực tiếp trên server
         public function getProductsByCategory($id)
         {
-            $stmt = $this->pdo->query("
+            $stmt = $this->pdo->prepare("
                 SELECT p.*, c.name as category_name
                 FROM products p
-                JOIN categories c ON p.category_id = $:id
+                JOIN categories c ON p.category_id = :id
             ");
             $stmt->execute(['id' => $id]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -122,9 +122,7 @@
          WHERE 1=1
     ";
 
-            $params = ['isDeleted' => $isDeleted];
-            $sql .= " AND p.isDeleted = :isDeleted";
-
+            $params = [];
             if ($isDeleted !== null) {
                 $sql .= " AND p.isDeleted = :isDeleted";
                 $params['isDeleted'] = $isDeleted;
@@ -232,4 +230,31 @@
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
+
+        public function countLowStock($threshold = 10)
+        {
+            $sql = "SELECT COUNT(*) FROM inventory inv 
+                    JOIN products p ON inv.product_id = p.id 
+                    WHERE inv.isDeleted = 0 AND p.isDeleted = 0 AND inv.stock_quantity <= :threshold";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue(':threshold', (int)$threshold, PDO::PARAM_INT);
+            $stmt->execute();
+            return (int) $stmt->fetchColumn();
+        }
+
+        public function getTopSellingProducts($limit = 5)
+        {
+            $sql = "SELECT p.id, p.name, p.image_url, SUM(oi.quantity) as total_sold, SUM(oi.quantity * oi.unit_price) as total_revenue
+                    FROM order_items oi
+                    JOIN products p ON oi.product_id = p.id
+                    JOIN orders o ON oi.order_id = o.id
+                    WHERE p.isDeleted = 0 AND o.isDeleted = 0 AND o.status_id = 6
+                    GROUP BY p.id, p.name, p.image_url
+                    ORDER BY total_sold DESC LIMIT :limit";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
     }
+

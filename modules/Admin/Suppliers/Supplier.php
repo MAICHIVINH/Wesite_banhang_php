@@ -122,17 +122,7 @@ $listSuppliers = $supplier->getFilterSuppliersToDB($limit, $offset, $keyword);
         </div>
     </div>
 
-    <nav class="mt-4">
-        <ul class="pagination justify-content-center">
-            <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
-                <li class="page-item <?= $i == $page ? 'active' : '' ?>">
-                    <a class="page-link" href="Admin.php?page=modules/Admin/Suppliers/Supplier.php&search=<?= $keyword ?>&number=<?= $i ?>">
-                        <?= $i ?>
-                    </a>
-                </li>
-            <?php } ?>
-        </ul>
-    </nav>
+    <?php renderPagination($totalPages, $page); ?>
 </div>
 
 <script>

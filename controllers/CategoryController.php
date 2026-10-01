@@ -303,4 +303,12 @@ class CategoryController
             RedisCache::delete("category:$id");
         }
     }
+
+    public function findByNameOrCreate($name)
+    {
+        $id = $this->categoryModel->findByNameOrCreate($name);
+        $this->invalidateCache();
+        return $id;
+    }
 }
+

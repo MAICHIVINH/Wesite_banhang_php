@@ -1,6 +1,6 @@
 <?php
 $keyword = $_GET["search"] ?? "";
-$page    = max(1, ($_GET['pageNumber'] ?? 1));
+$page    = max(1, (int)($_GET['pageNumber'] ?? $_GET['number'] ?? 1));
 $limit   = 6;
 $offset  = ($page - 1) * $limit;
 $status_id = $_GET['status_id'] ?? null;
@@ -140,17 +140,7 @@ $totalPages = max(1, ceil($totalRows / $limit));
     </div>
 
     <!-- PHÂN TRANG -->
-    <nav aria-label="Page navigation" class="mt-4">
-        <ul class="pagination justify-content-center">
-            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
-                    <a class="page-link" href="Admin.php?page=modules/Admin/Orders/Order.php&search=<?= urlencode($keyword) ?>&status_id=<?= urlencode($_GET['status_id'] ?? 0) ?>&pageNumber=<?= $i ?>">
-                        <?= $i ?>
-                    </a>
-                </li>
-            <?php endfor; ?>
-        </ul>
-    </nav>
+    <?php renderPagination($totalPages, $page, null, 'pageNumber'); ?>
 </div>
 
 

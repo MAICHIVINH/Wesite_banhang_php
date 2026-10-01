@@ -98,6 +98,15 @@ class Order extends Model
         return (int) $stmt->fetchColumn();
     }
 
+    public function countOrdersByStatus($statusId)
+    {
+        $sql = "SELECT COUNT(*) FROM {$this->table} WHERE isDeleted = 0 AND status_id = :status_id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(["status_id" => $statusId]);
+        return (int) $stmt->fetchColumn();
+    }
+
+
     public function findByCode($code)
     {
         $sql = "
@@ -191,17 +200,16 @@ class Order extends Model
         $isDeleted = 0
     ) {
         $sql = "
-            SELECT  o.*, u.* ,s.name AS status_name, o.id AS order_id, sh.status AS status_shipping
+            SELECT  o.*, u.FullName, u.Phone, u.Address, s.name AS status_name, o.id AS order_id, sh.status AS status_shipping
             FROM    orders o
-            JOIN    status s   ON o.status_id = s.id
-            JOIN    shipping sh ON sh.id = o.shipping_id
-            JOIN    users u ON o.user_id = u.id
-            JOIN    branches b ON b.id = o.branch_id
-            WHERE   1=1
+            LEFT JOIN status s ON o.status_id = s.id
+            LEFT JOIN shipping sh ON sh.id = o.shipping_id
+            LEFT JOIN users u ON o.user_id = u.id
+            LEFT JOIN branches b ON b.id = o.branch_id
+            WHERE   o.isDeleted = :isDeleted
         ";
 
         $params = ['isDeleted' => $isDeleted];
-        $sql .= " AND o.isDeleted = :isDeleted";
 
         if ($statusId !== null) {
             $sql .= " AND o.status_id = :status_id";
@@ -209,18 +217,18 @@ class Order extends Model
         }
 
         if ($keyword !== '') {
-            $sql .= " AND o.code LIKE :kw";
+            $sql .= " AND (o.code LIKE :kw OR u.FullName LIKE :kw OR u.Phone LIKE :kw)";
             $params['kw'] = '%' . $keyword . '%';
         }
 
         if (!$isAdmin) {
             if ($branch_id !== null) {
-                $sql .= " AND branch_id = :branch_id";
+                $sql .= " AND o.branch_id = :branch_id";
                 $params['branch_id'] = $branch_id;
             }
 
             if ($employeeId !== null && $statusId !== 1) {
-                $sql .= " AND employee_id = :employee_id";
+                $sql .= " AND o.employee_id = :employee_id";
                 $params['employee_id'] = $employeeId;
             }
         }
@@ -246,27 +254,36 @@ class Order extends Model
         bool $isAdmin = false,
         $isDeleted = 0
     ): int {
-        $sql = "SELECT COUNT(*) FROM orders WHERE isDeleted = 0";
+        $sql = "
+            SELECT COUNT(*) 
+            FROM orders o
+            LEFT JOIN status s ON o.status_id = s.id
+            LEFT JOIN shipping sh ON sh.id = o.shipping_id
+            LEFT JOIN users u ON o.user_id = u.id
+            LEFT JOIN branches b ON b.id = o.branch_id
+            WHERE o.isDeleted = :isDeleted
+        ";
 
         $params = ['isDeleted' => $isDeleted];
-        $sql .= " AND isDeleted = :isDeleted";
+
         if ($statusId !== null) {
-            $sql .= " AND status_id = :sid";
+            $sql .= " AND o.status_id = :sid";
             $params['sid'] = $statusId;
         }
+
         if ($keyword !== '') {
-            $sql .= " AND code LIKE :kw";
+            $sql .= " AND (o.code LIKE :kw OR u.FullName LIKE :kw OR u.Phone LIKE :kw)";
             $params['kw'] = '%' . $keyword . '%';
         }
 
         if (!$isAdmin) {
             if ($branch_id !== null) {
-                $sql .= " AND branch_id = :branch_id";
+                $sql .= " AND o.branch_id = :branch_id";
                 $params['branch_id'] = $branch_id;
             }
 
             if ($employeeId !== null && $statusId !== 1) {
-                $sql .= " AND employee_id = :employee_id";
+                $sql .= " AND o.employee_id = :employee_id";
                 $params['employee_id'] = $employeeId;
             }
         }
@@ -282,17 +299,17 @@ class Order extends Model
         int    $offset     = 0
     ) {
         $sql = "
-            SELECT  o.*, u.* ,s.name AS status_name, o.id AS order_id, sp.address AS shipping_address, sp.status AS shipping_status
+            SELECT  o.*, u.FullName, u.Phone, u.Address, s.name AS status_name, o.id AS order_id, sp.address AS shipping_address, sp.status AS shipping_status
             FROM    orders o
-            JOIN    status s   ON o.status_id = s.id
-            JOIN    users u ON o.user_id = u.id
-            JOIN    shipping sp ON sp.id = o.shipping_id
+            LEFT JOIN status s ON o.status_id = s.id
+            LEFT JOIN users u ON o.user_id = u.id
+            LEFT JOIN shipping sp ON sp.id = o.shipping_id
             WHERE   o.isDeleted = 0
         ";
         $params = [];
 
         if ($keyword !== '') {
-            $sql .= " AND o.code LIKE :kw";
+            $sql .= " AND (o.code LIKE :kw OR u.FullName LIKE :kw OR u.Phone LIKE :kw)";
             $params['kw'] = '%' . $keyword . '%';
         }
 
@@ -312,11 +329,18 @@ class Order extends Model
 
     public function countAllOrders($keyword = ""): int
     {
-        $sql = "SELECT COUNT(*) FROM orders WHERE isDeleted = 0";
+        $sql = "
+            SELECT COUNT(*) 
+            FROM orders o
+            LEFT JOIN status s ON o.status_id = s.id
+            LEFT JOIN users u ON o.user_id = u.id
+            LEFT JOIN shipping sp ON sp.id = o.shipping_id
+            WHERE o.isDeleted = 0
+        ";
         $params = [];
 
         if ($keyword !== '') {
-            $sql .= " AND code LIKE :kw";
+            $sql .= " AND (o.code LIKE :kw OR u.FullName LIKE :kw OR u.Phone LIKE :kw)";
             $params['kw'] = '%' . $keyword . '%';
         }
         $stmt = $this->pdo->prepare($sql);
@@ -339,4 +363,40 @@ class Order extends Model
         $stmt->execute(['shippingId' => $shippingId]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function getTotalRevenue()
+    {
+        $sql = "SELECT SUM(total_amount) FROM {$this->table} WHERE isDeleted = 0 AND status_id IN (2, 3, 4, 6)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return (float) ($stmt->fetchColumn() ?? 0);
+    }
+
+    public function getRevenueLast7Days()
+    {
+        $sql = "SELECT DATE(create_at) as order_date, SUM(total_amount) as daily_revenue
+                FROM {$this->table}
+                WHERE isDeleted = 0 AND status_id IN (2, 3, 4, 6) AND create_at >= CURDATE() - INTERVAL 6 DAY
+                GROUP BY DATE(create_at)
+                ORDER BY order_date ASC";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    public function getRecentOrders($limit = 5)
+    {
+        $sql = "SELECT o.id, o.code, o.total_amount, o.create_at, s.name as status_name, u.FullName as user_name
+                FROM {$this->table} o
+                JOIN status s ON o.status_id = s.id
+                JOIN users u ON o.user_id = u.id
+                WHERE o.isDeleted = 0
+                ORDER BY o.id DESC LIMIT :limit";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
+

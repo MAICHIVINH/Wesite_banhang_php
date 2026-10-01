@@ -108,17 +108,7 @@ $listCategories = $category->getFilterCategoriesToDb($limit, $offset, $keyword);
         </div>
     </div>
 
-    <nav class="mt-4">
-        <ul class="pagination justify-content-center">
-            <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
-                <li class="page-item <?= $i == $page ? 'active' : '' ?>">
-                    <a class="page-link" href="Admin.php?page=modules/Admin/Categories/Category.php&search=<?= $keyword ?>&number=<?= $i ?>">
-                        <?= $i ?>
-                    </a>
-                </li>
-            <?php } ?>
-        </ul>
-    </nav>
+    <?php renderPagination($totalPages, $page); ?>
 </div>
 <!-- Spinner -->
 <div id="loadingOverlay" style="display:none; position:fixed; z-index:9999; background:rgba(0,0,0,0.5); top:0; left:0; width:100%; height:100%; justify-content:center; align-items:center;">

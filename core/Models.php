@@ -96,9 +96,18 @@ abstract class Model
         return $stmt->fetchColumn() > 0;
     }
 
+    protected function sanitizeColumn(string $column): string
+    {
+        if (!preg_match('/^[a-zA-Z0-9_]+$/', $column)) {
+            throw new InvalidArgumentException("Tên cột không hợp lệ: " . htmlspecialchars($column, ENT_QUOTES, 'UTF-8'));
+        }
+        return $column;
+    }
+
     public function getByColumn(string $column, $value): array
     {
-        $sql = "SELECT * FROM {$this->table} WHERE {$column} = :value ";
+        $cleanColumn = $this->sanitizeColumn($column);
+        $sql = "SELECT * FROM {$this->table} WHERE {$cleanColumn} = :value ";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['value' => $value]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -130,45 +139,51 @@ abstract class Model
 
     public function insert($data): mixed
     {
-        $columns = implode(",", array_keys($data));
-        $values = ":" . implode(", :", array_keys($data));
+        $safeData = [];
+        foreach ($data as $col => $val) {
+            $safeData[$this->sanitizeColumn($col)] = $val;
+        }
+        $columns = implode(",", array_keys($safeData));
+        $values = ":" . implode(", :", array_keys($safeData));
         $stmt = $this->pdo->prepare("INSERT INTO {$this->table} ($columns) VALUES ($values)");
-        $stmt->execute($data);
+        $stmt->execute($safeData);
         return $this->pdo->lastInsertId();
     }
 
     public function update($id, $data)
     {
         $setParts = [];
+        $safeData = ['id' => $id];
         foreach ($data as $column => $value) {
-            $setParts[] = "$column = :$column";
+            $cleanCol = $this->sanitizeColumn($column);
+            $setParts[] = "$cleanCol = :$cleanCol";
+            $safeData[$cleanCol] = $value;
         }
 
         $setClause = implode(", ", $setParts);
 
-        $data['id'] = $id;
-
         $sql = "UPDATE {$this->table} SET $setClause WHERE id = :id AND isDeleted = 0";
         $stmt = $this->pdo->prepare($sql);
 
-        return $stmt->execute($data);
+        return $stmt->execute($safeData);
     }
 
     public function updateIsDeleted($id, $data)
     {
         $setParts = [];
+        $safeData = ['id' => $id];
         foreach ($data as $column => $value) {
-            $setParts[] = "$column = :$column";
+            $cleanCol = $this->sanitizeColumn($column);
+            $setParts[] = "$cleanCol = :$cleanCol";
+            $safeData[$cleanCol] = $value;
         }
 
         $setClause = implode(", ", $setParts);
 
-        $data['id'] = $id;
-
         $sql = "UPDATE {$this->table} SET $setClause WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
 
-        return $stmt->execute($data);
+        return $stmt->execute($safeData);
     }
 
     public function delete($id)
@@ -179,20 +194,23 @@ abstract class Model
 
     public function deleteByColumn(string $column, $value): bool
     {
-        $sql = "DELETE FROM {$this->table} WHERE {$column} = :value";
+        $cleanColumn = $this->sanitizeColumn($column);
+        $sql = "DELETE FROM {$this->table} WHERE {$cleanColumn} = :value";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute(['value' => $value]);
     }
 
     public function updateDeletedByColumn($column, $id)
     {
-        $stmt = $this->pdo->prepare("UPDATE {$this->table} SET isDeleted = 1 WHERE  {$column} = :value");
+        $cleanColumn = $this->sanitizeColumn($column);
+        $stmt = $this->pdo->prepare("UPDATE {$this->table} SET isDeleted = 1 WHERE  {$cleanColumn} = :value");
         return $stmt->execute(['value' => $id]);
     }
 
     public function updateNotDeletedByColumn($column, $id)
     {
-        $stmt = $this->pdo->prepare("UPDATE {$this->table} SET isDeleted = 0 WHERE  {$column} = :value");
+        $cleanColumn = $this->sanitizeColumn($column);
+        $stmt = $this->pdo->prepare("UPDATE {$this->table} SET isDeleted = 0 WHERE  {$cleanColumn} = :value");
         return $stmt->execute(['value' => $id]);
     }
 

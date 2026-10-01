@@ -201,6 +201,12 @@ setTimeout(function() {
         return $this->orderModel->countOrdersByStatusThisWeek($statusId);
     }
 
+    public function countOrdersByStatus($statusId)
+    {
+        return $this->orderModel->countOrdersByStatus($statusId);
+    }
+
+
     public function hasUserOrder($id)
     {
         try {
@@ -294,4 +300,20 @@ setTimeout(function() {
             ];
         }
     }
+
+    public function getTotalRevenue()
+    {
+        return $this->orderModel->getTotalRevenue();
+    }
+
+    public function getRevenueLast7Days()
+    {
+        return $this->orderModel->getRevenueLast7Days();
+    }
+
+    public function getRecentOrders($limit = 5)
+    {
+        return $this->orderModel->getRecentOrders($limit);
+    }
 }
+

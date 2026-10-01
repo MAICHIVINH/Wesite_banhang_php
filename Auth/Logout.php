@@ -1,6 +1,6 @@
 <?php
-session_name('admin_session');
-session_start();
+require_once __DIR__ . '/../core/Session.php';
+Session::start('admin_session');
 session_unset();
 session_destroy();
 header("Location: Login.php");

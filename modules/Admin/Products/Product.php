@@ -1,10 +1,29 @@
 <?php
 
-// $listProduct = $product->getAll();
+// Handle Export Sample Excel
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['download_sample_excel'])) {
+    $product->exportSampleProductExcel();
+}
+
+// Handle Import Products Excel
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_import_excel'])) {
+    if (isset($_FILES['excel_file']) && $_FILES['excel_file']['error'] === UPLOAD_ERR_OK) {
+        $importResult = $product->importProductsExcel($_FILES['excel_file']['tmp_name']);
+        if ($importResult['success']) {
+            $_SESSION['success'] = $importResult['message'];
+        } else {
+            $_SESSION['error'] = $importResult['message'];
+        }
+    } else {
+        $_SESSION['error'] = 'Vui lòng chọn file Excel hợp lệ (.xlsx, .xls)!';
+    }
+    echo "<script>window.location.href = 'Admin.php?page=modules/Admin/Products/Product.php';</script>";
+    exit;
+}
+
 $id_category = null;
 $id_supplier = null;
 $keyword = $_GET['search'] ?? '';
-
 
 $page = $_GET['number'] ?? 1;
 $limit = 8;
@@ -15,21 +34,21 @@ $totalPages = ceil($totalProducts / $limit);
 
 $listProduct = $product->getFilterProductsToDb($id_category, $id_supplier, $keyword, $limit, $offset);
 
-
 ?>
 <?php require_once 'modules/Admin/Products/DeleteProduct.php'; ?>
 
 <div class="product-container">
-    <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap">
-        <?php
-        if (hasPermission('modules/Admin/Products/Product.php')) {
-        ?>
-            <a href="Admin.php?page=modules/Admin/Products/AddProduct.php" class="btn btn-success">
-                <i class="bi bi-plus-circle me-2"></i> Thêm sản phẩm
-            </a>
-        <?php
-        }
-        ?>
+    <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+        <?php if (hasPermission('modules/Admin/Products/Product.php')): ?>
+            <div class="d-flex gap-2">
+                <a href="Admin.php?page=modules/Admin/Products/AddProduct.php" class="btn btn-success">
+                    <i class="bi bi-plus-circle me-1"></i> Thêm sản phẩm
+                </a>
+                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#importExcelModal">
+                    <i class="fas fa-file-excel me-1"></i> Nhập từ Excel
+                </button>
+            </div>
+        <?php endif; ?>
 
         <form class="search-form ms-auto" method="GET" action="Admin.php">
             <input type="hidden" name="page" value="modules/Admin/Products/Product.php">
@@ -43,6 +62,7 @@ $listProduct = $product->getFilterProductsToDb($id_category, $id_supplier, $keyw
                 placeholder="Nhập tên sản phẩm cần tìm ...">
         </form>
     </div>
+
 
     <div class="d-flex justify-content-center">
         <div class="table-container">
@@ -117,20 +137,61 @@ $listProduct = $product->getFilterProductsToDb($id_category, $id_supplier, $keyw
         </div>
     </div>
 
-    <nav class="mt-4">
-        <ul class="pagination justify-content-center">
-            <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
-                <li class="page-item <?= $i == $page ? 'active' : '' ?>">
-                    <a class="page-link" href="Admin.php?page=modules/Admin/Products/Product.php&category=<?= $id_category ?>&supplier=<?= $id_supplier ?>&search=<?= $keyword ?>&number=<?= $i ?>">
-                        <?= $i ?>
-                    </a>
-                </li>
-            <?php } ?>
-        </ul>
-    </nav>
+    <?php renderPagination($totalPages, $page); ?>
 </div>
 
-<!-- Spinner -->
+<!-- Modal Nhập sản phẩm từ Excel -->
+<div class="modal fade" id="importExcelModal" tabindex="-1" aria-labelledby="importExcelModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="importExcelModalLabel">
+                    <i class="fas fa-file-excel me-2"></i> Nhập sản phẩm hàng loạt từ Excel
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
+            </div>
+            
+            <!-- Download Template Section -->
+            <div class="p-3 bg-light border-bottom d-flex align-items-center justify-content-between">
+                <div>
+                    <strong class="text-dark d-block mb-1"><i class="fas fa-info-circle text-info me-1"></i> Chưa có file Excel mẫu?</strong>
+                    <small class="text-muted">Tải file mẫu định dạng chuẩn kèm danh sách tra cứu Loại & Nhà cung cấp.</small>
+                </div>
+                <form method="POST" action="" class="mb-0">
+                    <button type="submit" name="download_sample_excel" class="btn btn-outline-success btn-sm text-nowrap">
+                        <i class="fas fa-download me-1"></i> Tải file mẫu (.xlsx)
+                    </button>
+                </form>
+            </div>
+
+            <form method="POST" action="" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Chọn file Excel (.xlsx / .xls) <span class="text-danger">*</span></label>
+                        <input type="file" name="excel_file" class="form-control" accept=".xlsx, .xls" required>
+                    </div>
+
+                    <div class="alert alert-info py-2 small mb-0">
+                        <ul class="mb-0 ps-3">
+                            <li>Nếu <strong>Loại sản phẩm</strong> hoặc <strong>Nhà cung cấp</strong> chưa có trong CSDL, hệ thống sẽ tự động thêm mới.</li>
+                            <li>Nếu cột <strong>URL hình ảnh</strong> để trống, sản phẩm sẽ được gán <strong>Ảnh mặc định</strong>. Bạn có thể cập nhật lại ảnh sau.</li>
+                            <li>Số lượng tồn kho ban đầu mặc định là <strong>10</strong> nếu để trống.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" name="btn_import_excel" class="btn btn-success">
+                        <i class="fas fa-upload me-1"></i> Bắt đầu Nhập
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Spinner Overlay -->
 <div id="loadingOverlay" style="display:none; position:fixed; z-index:9999; background:rgba(0,0,0,0.5); top:0; left:0; width:100%; height:100%; justify-content:center; align-items:center;">
     <div class="spinner-border text-light" role="status">
         <span class="visually-hidden">Loading...</span>
@@ -143,15 +204,14 @@ $listProduct = $product->getFilterProductsToDb($id_category, $id_supplier, $keyw
 
     document.querySelectorAll('#deleteProductForm').forEach(form => {
         form.addEventListener('submit', function() {
-            loadingOverlay.style.display = 'flex';
+            if (loadingOverlay) loadingOverlay.style.display = 'flex';
         });
     });
-
 
     if (addBtn) {
         addBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            loadingOverlay.style.display = 'flex';
+            if (loadingOverlay) loadingOverlay.style.display = 'flex';
             setTimeout(() => {
                 window.location.href = addBtn.href;
             }, 300);
@@ -162,7 +222,7 @@ $listProduct = $product->getFilterProductsToDb($id_category, $id_supplier, $keyw
     editButtons.forEach(function(btn) {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
-            loadingOverlay.style.display = 'flex';
+            if (loadingOverlay) loadingOverlay.style.display = 'flex';
             setTimeout(() => {
                 window.location.href = btn.href;
             }, 300);
@@ -173,7 +233,7 @@ $listProduct = $product->getFilterProductsToDb($id_category, $id_supplier, $keyw
     pageLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            loadingOverlay.style.display = 'flex';
+            if (loadingOverlay) loadingOverlay.style.display = 'flex';
             setTimeout(() => {
                 window.location.href = link.href;
             }, 300);

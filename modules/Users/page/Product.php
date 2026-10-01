@@ -70,15 +70,5 @@ $products = $product->getFilterProducts($id_category, $id_supplier, $keyword, $l
 </div>
 
 <?php if (!empty($products) && $totalPages > 1): ?>
-<nav class="mt-4">
-    <ul class="pagination justify-content-center">
-        <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
-            <li class="page-item <?= $i == $page ? 'active' : '' ?>">
-                <a class="page-link" href="index.php?subpage=modules/Users/Layout/Main.php&category=<?= $id_category ?>&supplier=<?= $id_supplier ?>&search=<?= $keyword ?><?= $priceQuery ?>&number=<?= $i ?>">
-                    <?= $i ?>
-                </a>
-            </li>
-        <?php } ?>
-    </ul>
-</nav>
+    <?php renderPagination($totalPages, $page); ?>
 <?php endif; ?>

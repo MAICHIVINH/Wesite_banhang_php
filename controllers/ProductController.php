@@ -13,6 +13,8 @@ require_once './controllers/BaseController.php';
 use Respect\Validation\Validator as v;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+
 
 class ProductController extends BaseController
 {
@@ -595,4 +597,218 @@ class ProductController extends BaseController
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
+
+    public function countLowStock($threshold = 10)
+    {
+        return $this->productModel->countLowStock($threshold);
+    }
+
+    public function getTopSellingProducts($limit = 5)
+    {
+        return $this->productModel->getTopSellingProducts($limit);
+    }
+
+    public function exportSampleProductExcel()
+    {
+        $spreadsheet = new Spreadsheet();
+        
+        // Sheet 1: Product Template
+        $sheet1 = $spreadsheet->getActiveSheet();
+        $sheet1->setTitle('Nhập sản phẩm');
+
+        // Header Style
+        $sheet1->mergeCells('A1:I1');
+        $sheet1->setCellValue('A1', 'MẪU FILE NHẬP SẢN PHẨM HÀNG LOẠT');
+        $sheet1->getStyle('A1')->getFont()->setBold(true)->setSize(14)->setColor(new \PhpOffice\PhpSpreadsheet\Style\Color('FFFFFF'));
+        $sheet1->getStyle('A1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB('198754');
+        $sheet1->getStyle('A1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+        // Column Headers
+        $headers = [
+            'A2' => 'Tên sản phẩm (*)',
+            'B2' => 'Giá bán (VNĐ) (*)',
+            'C2' => 'Giảm giá (%)',
+            'D2' => 'Loại sản phẩm (*)',
+            'E2' => 'Nhà cung cấp (*)',
+            'F2' => 'Số lượng nhập kho',
+            'G2' => 'URL hình ảnh',
+            'H2' => 'Mô tả ngắn',
+            'I2' => 'Nội dung chi tiết'
+        ];
+
+        foreach ($headers as $cell => $value) {
+            $sheet1->setCellValue($cell, $value);
+        }
+
+        $sheet1->getStyle('A2:I2')->getFont()->setBold(true);
+        $sheet1->getStyle('A2:I2')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB('E9ECEF');
+
+        // Sample Data Rows
+        $sampleData = [
+            [
+                'iPhone 16 Pro Max 256GB',
+                34990000,
+                5,
+                'Điện thoại',
+                'Apple',
+                20,
+                'https://images.unsplash.com/photo-1592750475338-74b7b21085ab',
+                'Điện thoại cao cấp Apple 2026',
+                'Chip A18 Pro mượt mà, khung Titanium siêu bền'
+            ],
+            [
+                'Laptop Dell XPS 15 9530',
+                45000000,
+                10,
+                'Laptop',
+                'Dell',
+                15,
+                'https://images.unsplash.com/photo-1593642632823-8f785ba67e45',
+                'Laptop doanh nhân màn hình OLED',
+                'Intel Core i9, RAM 32GB, SSD 1TB'
+            ]
+        ];
+
+        $row = 3;
+        foreach ($sampleData as $data) {
+            $col = 'A';
+            foreach ($data as $val) {
+                $sheet1->setCellValue($col . $row, $val);
+                $col++;
+            }
+            $row++;
+        }
+
+        foreach (range('A', 'I') as $col) {
+            $sheet1->getColumnDimension($col)->setAutoSize(true);
+        }
+
+        // Sheet 2: Lookup reference
+        $sheet2 = $spreadsheet->createSheet();
+        $sheet2->setTitle('Danh mục & Nhà cung cấp');
+
+        $sheet2->setCellValue('A1', 'ID Loại SP');
+        $sheet2->setCellValue('B1', 'Tên Loại sản phẩm');
+        $sheet2->getStyle('A1:B1')->getFont()->setBold(true);
+
+        $categories = $this->categoryModel->all();
+        $r = 2;
+        foreach ($categories as $cat) {
+            $sheet2->setCellValue('A' . $r, $cat['id']);
+            $sheet2->setCellValue('B' . $r, $cat['name']);
+            $r++;
+        }
+
+        $sheet2->setCellValue('D1', 'ID Nhà cung cấp');
+        $sheet2->setCellValue('E1', 'Tên Nhà cung cấp');
+        $sheet2->getStyle('D1:E1')->getFont()->setBold(true);
+
+        $suppliers = $this->supplierModel->all();
+        $r = 2;
+        foreach ($suppliers as $sup) {
+            $sheet2->setCellValue('D' . $r, $sup['id']);
+            $sheet2->setCellValue('E' . $r, $sup['name']);
+            $r++;
+        }
+
+        foreach (range('A', 'E') as $col) {
+            $sheet2->getColumnDimension($col)->setAutoSize(true);
+        }
+
+        $spreadsheet->setActiveSheetIndex(0);
+
+        $writer = new Xlsx($spreadsheet);
+        $filename = 'mau_nhap_san_pham.xlsx';
+        $filepath = 'exports/' . $filename;
+
+        if (!file_exists('exports')) {
+            mkdir('exports', 0777, true);
+        }
+
+        if (ob_get_length()) ob_end_clean();
+        $writer->save($filepath);
+
+        echo "<script>
+            window.location.href='$filepath';
+            setTimeout(function() {
+                window.location.href = 'Admin.php?page=modules/Admin/Products/Product.php';
+            }, 1000);
+        </script>";
+        exit;
+    }
+
+    public function importProductsExcel($filePath)
+    {
+        try {
+            if (!file_exists($filePath)) {
+                return ['success' => false, 'message' => 'Không tìm thấy file Excel upload!'];
+            }
+
+            $spreadsheet = IOFactory::load($filePath);
+            $sheet = $spreadsheet->getActiveSheet();
+            $highestRow = $sheet->getHighestRow();
+
+            $importedCount = 0;
+
+            for ($row = 3; $row <= $highestRow; $row++) {
+                $name = trim((string)$sheet->getCell('A' . $row)->getValue());
+                if (empty($name)) continue; // Skip empty rows
+
+                $price = (float)$sheet->getCell('B' . $row)->getValue();
+                $discount = (float)$sheet->getCell('C' . $row)->getValue();
+                $categoryInput = trim((string)$sheet->getCell('D' . $row)->getValue());
+                $supplierInput = trim((string)$sheet->getCell('E' . $row)->getValue());
+                $stockQty = (int)$sheet->getCell('F' . $row)->getValue();
+                if ($stockQty <= 0) $stockQty = 10; // Default stock quantity
+
+                $imageUrl = trim((string)$sheet->getCell('G' . $row)->getValue());
+                if (empty($imageUrl)) {
+                    $imageUrl = 'public/uploads/default-product.jpg';
+                }
+
+                $description = trim((string)$sheet->getCell('H' . $row)->getValue());
+                $content = trim((string)$sheet->getCell('I' . $row)->getValue());
+
+                // Resolve Category and Supplier IDs
+                $categoryId = $this->categoryModel->findByNameOrCreate($categoryInput);
+                $supplierId = $this->supplierModel->findByNameOrCreate($supplierInput);
+
+                $productData = [
+                    'name' => $name,
+                    'price' => $price,
+                    'discount' => $discount,
+                    'description' => $description,
+                    'content' => $content,
+                    'category_id' => $categoryId,
+                    'supplier_id' => $supplierId,
+                    'image_url' => $imageUrl,
+                    'isDeleted' => 0
+                ];
+
+                $result = $this->productModel->insert($productData);
+                if ($result) {
+                    $newProductId = (int)$result;
+                    // Initialize inventory record
+                    $this->inventoryModel->insert([
+                        'product_id' => $newProductId,
+                        'branch_id' => 1,
+                        'stock_quantity' => $stockQty,
+                        'last_update' => date('Y-m-d H:i:s'),
+                        'isDeleted' => 0
+                    ]);
+                    $importedCount++;
+                }
+            }
+
+            return [
+                'success' => true,
+                'count' => $importedCount,
+                'message' => "Đã nhập thành công {$importedCount} sản phẩm vào hệ thống!"
+            ];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => 'Lỗi đọc file Excel: ' . $e->getMessage()];
+        }
+    }
 }
+
+

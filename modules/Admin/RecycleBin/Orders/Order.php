@@ -1,6 +1,6 @@
 <?php
 $keyword = $_GET["search"] ?? "";
-$page    = max(1, ($_GET['pageNumber'] ?? 1));
+$page    = max(1, (int)($_GET['pageNumber'] ?? $_GET['number'] ?? 1));
 $limit   = 6;
 $offset  = ($page - 1) * $limit;
 $status_id = $_GET['status_id'] ?? null;
@@ -98,6 +98,7 @@ $totalOrdersIsDeleted = $orderController->countIsDeleted();
 
         </table>
     </div>
+    <?php renderPagination($totalPages, $page, null, 'pageNumber'); ?>
 </div>
 <script>
     const restoreButtons = document.querySelectorAll('.restore-btn');
